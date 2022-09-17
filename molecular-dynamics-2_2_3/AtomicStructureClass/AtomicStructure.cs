@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace MMD
+namespace molecular_dynamics_2_2_3
 {
 	public partial class AtomicStructure
 	{
@@ -90,11 +90,6 @@ namespace MMD
 		}
 
 		/// <summary>
-		/// Тип потенциала.
-		/// </summary>
-		public PotentialType PotentialType { get; set; }
-
-		/// <summary>
 		/// Тип атомов.
 		/// </summary>
 		public AtomType AtomType
@@ -139,22 +134,19 @@ namespace MMD
 		/// <summary>
 		/// Класс потенциала.
 		/// </summary>
-		private Potential _potential;
+		private readonly PotentialModifiedLJ _potential;
 
 		/// <summary>
 		/// Конструктор по умолчанию.
 		/// </summary>
-		public AtomicStructure(int size, double paramLat, AtomType atomType, PotentialType potentialType)
+		public AtomicStructure(int size, double paramLat, AtomType atomType)
 		{
 			_rnd = new Random(DateTime.Now.Millisecond);
+			_potential = new PotentialModifiedLJ(atomType);
 			Atoms = new List<Atom>();
 			AtomType = atomType;
-			PotentialType = potentialType;
 			Size = size;
 			ParamLat = paramLat;
-
-			// Определение потенциала.
-			InitPotential();
 		}
 
 		/// <summary>
@@ -165,36 +157,20 @@ namespace MMD
 		/// <param name="potentialType"></param>
 		/// <param name="vmax"></param>
 		/// <param name="coefСircum"></param>
-		public AtomicStructure(int size, AtomType atomType, PotentialType potentialType)
+		public AtomicStructure(int size, AtomType atomType)
 		{
 			_rnd = new Random(DateTime.Now.Millisecond);
+			_potential = new PotentialModifiedLJ(atomType);
 			Atoms = new List<Atom>();
 
 			Size = size;
 			AtomType = atomType;
-			PotentialType = potentialType;
-
-			// Определение потенциала.
-			InitPotential();
 
 			// Начальное размещение атомов.
 			InitPlacement();
 
 			// Вычисление начальных параметров системы.
 			InitCalculation();
-		}
-
-		/// <summary>
-		/// Инициализация потенциала.
-		/// </summary>
-		/// <param name="coefСircum"></param>
-		private void InitPotential()
-		{
-			switch (PotentialType)
-			{
-				case PotentialType.LennardJones: _potential = new PotentialLJ(_atomType); break;
-				case PotentialType.ModifiedLennardJones: _potential = new PotentialModifiedLJ(_atomType); break;
-			}
 		}
 
 		/// <summary>
@@ -304,7 +280,6 @@ namespace MMD
 				atom.Velocity = new Vector2D(Math.Sin(pi2 * _rnd.NextDouble()), Math.Cos(pi2 * _rnd.NextDouble())) * Vsqrt;
 				atom.Velocity = (-1 * Vector2D.One + 2 * new Vector2D(_rnd.NextDouble(), _rnd.NextDouble())) * Vsqrt;
 			}
-				
 		}
 
 		/// <summary>

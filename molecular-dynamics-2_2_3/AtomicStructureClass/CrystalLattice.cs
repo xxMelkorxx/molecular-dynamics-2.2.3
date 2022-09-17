@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MMD
+namespace molecular_dynamics_2_2_3
 {
 	public partial class AtomicStructure
 	{
@@ -51,7 +51,8 @@ namespace MMD
 		/// </summary>
 		private void InitPlaсementRandom()
 		{
-
+			for (int i = 0; i < N; i++)
+				Atoms.Add(new Atom(i, AtomType, new Vector2D(_rnd.NextDouble() * L, _rnd.NextDouble() * L)));
 		}
 	}
 }

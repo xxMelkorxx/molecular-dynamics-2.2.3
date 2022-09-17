@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MMD
+namespace molecular_dynamics_2_2_3
 {
 	public class PotentialModifiedLJ
 	{
@@ -81,10 +81,11 @@ namespace MMD
 		/// </summary>
 		/// <param name="r2"></param>
 		/// <returns></returns>
-		public double Force(double r, Vector2D dxdy)
+		public Vector2D Force(double r, Vector2D dxdy)
 		{
-			return FLD(r)*K(r);
-
+			if (r < param.r1) return FLD(r) * dxdy;
+			else if (r > param.r2) return Vector2D.Zero;
+			else return FLD(r) * K(r) * dxdy + PLD(r) * DK(r);
 		}
 
 		/// <summary>
@@ -117,14 +118,12 @@ namespace MMD
 
 		private double K(double r)
 		{
-			if (r < param.r1) return 1;
-			else if (r > param.r2) return 0;
-			else return Math.Pow(1 - Math.Pow((r - param.r1) / (param.r1 - param.r2), 2), 2);
+			return Math.Pow(1 - Math.Pow((r - param.r1) / (param.r1 - param.r2), 2), 2);
 		}
 
 		private double DK(double r)
 		{
-			return Math.Pow(1 - Math.Pow((r - param.r1) / (param.r1 - param.r2), 2), 2);
+			return 4 * (r - param.r1) / Math.Pow(param.r1 - param.r2, 2) * (1 + Math.Pow((r - param.r1) / (param.r1 - param.r2), 2));
 		}
 	}
 }

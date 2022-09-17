@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace MMD
+namespace molecular_dynamics_2_2_3
 {
 	public partial class AtomicStructure
 	{
@@ -66,7 +65,7 @@ namespace MMD
 					// Вычисление расстояния между частицами.
 					double rij = Separation(atomI.Position, atomJ.Position, out Vector2D dxdy);
 
-					Vector2D force = _potential.Force(rij) * dxdy;
+					Vector2D force = _potential.Force(rij, dxdy);
 					sumForce += force;
 					atomI.Acceleration += force / atomI.Weight;
 					atomJ.Acceleration -= force / atomJ.Weight;

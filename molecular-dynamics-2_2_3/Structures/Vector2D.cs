@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MMD
+namespace molecular_dynamics_2_2_3
 {
     public struct Vector2D
     {

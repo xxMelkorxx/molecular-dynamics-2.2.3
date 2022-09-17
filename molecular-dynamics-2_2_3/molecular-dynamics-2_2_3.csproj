@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,6 +51,7 @@
     <Compile Include="AtomicStructureClass\AtomicStructure.cs" />
     <Compile Include="AtomicStructureClass\CrystalLattice.cs" />
     <Compile Include="AtomicStructureClass\Verlet.cs" />
+    <Compile Include="Drawing.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
