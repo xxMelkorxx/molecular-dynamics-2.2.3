@@ -7,51 +7,53 @@ namespace molecular_dynamics_2_2_3
 		/// <summary>
 		/// 1 эВ в Дж с нм.
 		/// </summary>
-		public const double eV = 0.1602176634;
+		private const double eV = 0.1602176634;
 		/// <summary>
 		/// Постоянная Больцмана (эВ/К).
 		/// </summary>
-		public const double kB = 8.61733262e-5;
+		private const double kB = 8.61733262e-5;
 
 		public struct ParamsPotentialModifiedLJ
 		{
 			/// <summary>
 			/// Модуль потенциальной энергии взаимодействия между атомами при равновесии.
 			/// </summary>
-			public double sigma;
+			public double Sigma;
 			/// <summary>
 			/// Равновесное расстояние между центрами атомов
 			/// </summary>
+			public double R0, R1, R2;
+			/// <summary>
+			/// Модуль потенциальной энергии взаимодействия между атомами при равновесии.
+			/// </summary>
 			public double D;
 
-			public double r0, r1, r2;
-
-			public ParamsPotentialModifiedLJ(double D, double sigma)
+			public ParamsPotentialModifiedLJ(double d, double sigma)
 			{
-				this.sigma = sigma; this.D = D;
-				r0 = sigma * Math.Pow(2, 1 / 6);
-				r1 = 1.2 * r0;
-				r2 = 1.8 * r0;
+				Sigma = sigma; D = d;
+				R0 = sigma * Math.Pow(2, 1.0 / 6.0);
+				R1 = 1.2 * R0;
+				R2 = 1.8 * R0;
 			}
 		}
 
 		/// <summary>
 		/// Параметры для углерода в модифицированном потенциале Леннарда-Джонса.
 		/// </summary>
-		public static ParamsPotentialModifiedLJ paramsMLJ_C = new ParamsPotentialModifiedLJ(0.03611, 0.2495);
+		public static ParamsPotentialModifiedLJ ParamsMLJ_C = new ParamsPotentialModifiedLJ(0.03611, 0.2495);
 		/// <summary>
 		/// Параметры для азота в модифицированном потенциале Леннарда-Джонса.
 		/// </summary>
-		public static ParamsPotentialModifiedLJ paramsMLJ_N = new ParamsPotentialModifiedLJ(0.00448, 0.3098);
+		public static ParamsPotentialModifiedLJ ParamsMLJ_N = new ParamsPotentialModifiedLJ(0.00448, 0.3098);
 		/// <summary>
 		/// Параметры для аргона в модифицированном потенциале Леннарда-Джонса.
 		/// </summary>
-		public static ParamsPotentialModifiedLJ paramsMLJ_Ar = new ParamsPotentialModifiedLJ(0.01029, 0.3408);
+		public static ParamsPotentialModifiedLJ ParamsMLJ_Ar = new ParamsPotentialModifiedLJ(0.01029, 0.3408);
 
 		/// <summary>
 		/// Параметры потенциала.
 		/// </summary>
-		public ParamsPotentialModifiedLJ param;
+		public ParamsPotentialModifiedLJ Param;
 		/// <summary>
 		/// Тип атома.
 		/// </summary>
@@ -63,9 +65,10 @@ namespace molecular_dynamics_2_2_3
 				_type = value;
 				switch (_type)
 				{
-					case AtomType.C: param = paramsMLJ_C; break;
-					case AtomType.N: param = paramsMLJ_N; break;
-					case AtomType.Ar: param = paramsMLJ_Ar; break;
+					case AtomType.C: Param = ParamsMLJ_C; break;
+					case AtomType.N: Param = ParamsMLJ_N; break;
+					case AtomType.Ar: Param = ParamsMLJ_Ar; break;
+					default: Param = ParamsMLJ_Ar; break;
 				}
 			}
 		}
@@ -77,53 +80,60 @@ namespace molecular_dynamics_2_2_3
 		}
 
 		/// <summary>
-		/// Cила в потенциале Леннарда-Джонса.
+		/// Вычисление силы.
 		/// </summary>
-		/// <param name="r2"></param>
+		/// <param name="r"></param>
+		/// <param name="dxdy"></param>
 		/// <returns></returns>
 		public Vector2D Force(double r, Vector2D dxdy)
 		{
-			if (r < param.r1) return FLD(r) * dxdy;
-			else if (r > param.r2) return Vector2D.Zero;
-			else return FLD(r) * K(r) * dxdy + PLD(r) * DK(r);
+			return r < Param.R1 ? FLD(r) * dxdy : r > Param.R2 ? Vector2D.Zero : K(r) * Vector2D.One; 
 		}
 
 		/// <summary>
-		/// Потенциал Леннарда-Джонса.
+		/// Вычисление потенциала.
 		/// </summary>
-		/// <param name="r2">Расстояние между частицами.</param>
+		/// <param name="r">Расстояние между частицами.</param>
 		/// <returns></returns>
 		public double PotentialEnergy(double r)
 		{
-			if (r < param.r1) return PLD(r);
-			else if (r > param.r2) return 0;
-			return PLD(r) * K(r);
+			return r < Param.R1 ? PLD(r) : r > Param.R2 ? 0 : PLD(r) * K(r);
 		}
-
+		
+		/// <summary>
+		/// Потенциал Леннарда-Джонса.
+		/// </summary>
+		/// <param name="r">Расстояние между частицами.</param>
+		/// <returns></returns>
 		private double PLD(double r)
 		{
-			double ri = param.sigma / r;
-			double ri3 = ri * ri * ri;
-			double ri6 = ri3 * ri3;
-			return 4 * param.D * ri6 * (ri6 - 1);
+			var ri = Param.Sigma / r;
+			var ri3 = ri * ri * ri;
+			var ri6 = ri3 * ri3;
+			return 4 * Param.D * ri6 * (ri6 - 1);
 		}
 
+		/// <summary>
+		/// Cила в потенциале Леннарда-Джонса.
+		/// </summary>
+		/// <param name="r">Расстояние между частицами.</param>
+		/// <returns></returns>
 		private double FLD(double r)
 		{
-			double ri = param.sigma / r;
-			double ri3 = ri * ri * ri;
-			double ri6 = ri3 * ri3;
-			return 24 * param.D * eV * ri6 * (2 * ri6 - 1) / (r * r);
+			var ri = Param.Sigma / r;
+			var ri3 = ri * ri * ri;
+			var ri6 = ri3 * ri3;
+			return 24 * Param.D * eV * ri6 * (2 * ri6 - 1) / (r * r);
 		}
 
+		/// <summary>
+		/// Функция обрезания потенциала.
+		/// </summary>
+		/// <param name="r">Расстояние между частицами.</param>
+		/// <returns></returns>
 		private double K(double r)
 		{
-			return Math.Pow(1 - Math.Pow((r - param.r1) / (param.r1 - param.r2), 2), 2);
-		}
-
-		private double DK(double r)
-		{
-			return 4 * (r - param.r1) / Math.Pow(param.r1 - param.r2, 2) * (1 + Math.Pow((r - param.r1) / (param.r1 - param.r2), 2));
+			return Math.Pow(1 - Math.Pow((r - Param.R1) / (Param.R1 - Param.R2), 2), 2);
 		}
 	}
 }

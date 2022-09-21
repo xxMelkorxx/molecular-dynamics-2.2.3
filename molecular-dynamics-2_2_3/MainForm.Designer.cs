@@ -23,23 +23,26 @@
 		#region Код, автоматически созданный конструктором форм Windows
 
 		/// <summary>
-		/// Требуемый метод для поддержки конструктора — не изменяйте 
-		/// содержимое этого метода с помощью редактора кода.
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea14 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend14 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series40 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Series series41 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Series series42 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			this.components = new System.ComponentModel.Container();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.pictureBox_visualization = new System.Windows.Forms.PictureBox();
 			this.richTextBox_outputWnd = new System.Windows.Forms.RichTextBox();
 			this.chart_energy = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.button_clear = new System.Windows.Forms.Button();
-			this.button1 = new System.Windows.Forms.Button();
-			this.button2 = new System.Windows.Forms.Button();
+			this.button_stop = new System.Windows.Forms.Button();
+			this.button_start = new System.Windows.Forms.Button();
 			this.button_createModel = new System.Windows.Forms.Button();
+			this.timer = new System.Windows.Forms.Timer(this.components);
+			this.toolStripProgressBar1 = new System.Windows.Forms.ToolStripProgressBar();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_visualization)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.chart_energy)).BeginInit();
 			this.SuspendLayout();
@@ -70,46 +73,46 @@
 			// 
 			this.chart_energy.BorderlineColor = System.Drawing.Color.DimGray;
 			this.chart_energy.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea14.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
-			chartArea14.AxisX.Minimum = 0D;
-			chartArea14.AxisX.TitleFont = new System.Drawing.Font("Cascadia Mono", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			chartArea14.AxisX2.TitleFont = new System.Drawing.Font("Cascadia Mono", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			chartArea14.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
-			chartArea14.AxisY.TitleFont = new System.Drawing.Font("Cascadia Mono", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			chartArea14.AxisY2.TitleFont = new System.Drawing.Font("Cascadia Mono", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			chartArea14.Name = "ChartArea1";
-			this.chart_energy.ChartAreas.Add(chartArea14);
-			legend14.BackColor = System.Drawing.Color.Transparent;
-			legend14.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.Center;
-			legend14.DockedToChartArea = "ChartArea1";
-			legend14.Font = new System.Drawing.Font("Cascadia Mono", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			legend14.IsTextAutoFit = false;
-			legend14.Name = "Legend1";
-			this.chart_energy.Legends.Add(legend14);
+			chartArea1.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+			chartArea1.AxisX.Minimum = 0D;
+			chartArea1.AxisX.TitleFont = new System.Drawing.Font("Cascadia Mono", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			chartArea1.AxisX2.TitleFont = new System.Drawing.Font("Cascadia Mono", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			chartArea1.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+			chartArea1.AxisY.TitleFont = new System.Drawing.Font("Cascadia Mono", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			chartArea1.AxisY2.TitleFont = new System.Drawing.Font("Cascadia Mono", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			chartArea1.Name = "ChartArea1";
+			this.chart_energy.ChartAreas.Add(chartArea1);
+			legend1.BackColor = System.Drawing.Color.Transparent;
+			legend1.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.Center;
+			legend1.DockedToChartArea = "ChartArea1";
+			legend1.Font = new System.Drawing.Font("Cascadia Mono", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			legend1.IsTextAutoFit = false;
+			legend1.Name = "Legend1";
+			this.chart_energy.Legends.Add(legend1);
 			this.chart_energy.Location = new System.Drawing.Point(518, 12);
 			this.chart_energy.Name = "chart_energy";
-			series40.ChartArea = "ChartArea1";
-			series40.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series40.Color = System.Drawing.Color.Red;
-			series40.Font = new System.Drawing.Font("Cascadia Mono", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			series40.Legend = "Legend1";
-			series40.LegendText = "Кинетическая энергия";
-			series40.Name = "ke";
-			series41.ChartArea = "ChartArea1";
-			series41.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series41.Color = System.Drawing.Color.Blue;
-			series41.Legend = "Legend1";
-			series41.LegendText = "Потенциальная энергия";
-			series41.Name = "pe";
-			series42.ChartArea = "ChartArea1";
-			series42.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series42.Color = System.Drawing.Color.Green;
-			series42.Legend = "Legend1";
-			series42.LegendText = "Полная энергия";
-			series42.Name = "fe";
-			this.chart_energy.Series.Add(series40);
-			this.chart_energy.Series.Add(series41);
-			this.chart_energy.Series.Add(series42);
+			series1.ChartArea = "ChartArea1";
+			series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series1.Color = System.Drawing.Color.Red;
+			series1.Font = new System.Drawing.Font("Cascadia Mono", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			series1.Legend = "Legend1";
+			series1.LegendText = "Кинетическая энергия";
+			series1.Name = "ke";
+			series2.ChartArea = "ChartArea1";
+			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series2.Color = System.Drawing.Color.Blue;
+			series2.Legend = "Legend1";
+			series2.LegendText = "Потенциальная энергия";
+			series2.Name = "pe";
+			series3.ChartArea = "ChartArea1";
+			series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series3.Color = System.Drawing.Color.Green;
+			series3.Legend = "Legend1";
+			series3.LegendText = "Полная энергия";
+			series3.Name = "fe";
+			this.chart_energy.Series.Add(series1);
+			this.chart_energy.Series.Add(series2);
+			this.chart_energy.Series.Add(series3);
 			this.chart_energy.Size = new System.Drawing.Size(700, 500);
 			this.chart_energy.TabIndex = 2;
 			this.chart_energy.Text = "Графики энергий";
@@ -123,23 +126,25 @@
 			this.button_clear.Text = "Очистить";
 			this.button_clear.UseVisualStyleBackColor = true;
 			// 
-			// button1
+			// button_stop
 			// 
-			this.button1.Location = new System.Drawing.Point(1225, 727);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(300, 30);
-			this.button1.TabIndex = 4;
-			this.button1.Text = "Очистить";
-			this.button1.UseVisualStyleBackColor = true;
+			this.button_stop.Location = new System.Drawing.Point(1225, 727);
+			this.button_stop.Name = "button_stop";
+			this.button_stop.Size = new System.Drawing.Size(300, 30);
+			this.button_stop.TabIndex = 4;
+			this.button_stop.Text = "----";
+			this.button_stop.UseVisualStyleBackColor = true;
 			// 
-			// button2
+			// button_start
 			// 
-			this.button2.Location = new System.Drawing.Point(1224, 688);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(300, 30);
-			this.button2.TabIndex = 5;
-			this.button2.Text = "Очистить";
-			this.button2.UseVisualStyleBackColor = true;
+			this.button_start.Enabled = false;
+			this.button_start.Location = new System.Drawing.Point(1224, 688);
+			this.button_start.Name = "button_start";
+			this.button_start.Size = new System.Drawing.Size(300, 30);
+			this.button_start.TabIndex = 5;
+			this.button_start.Text = "Запуск моделирования";
+			this.button_start.UseVisualStyleBackColor = true;
+			this.button_start.Click += new System.EventHandler(this.OnClickButtonStart);
 			// 
 			// button_createModel
 			// 
@@ -151,16 +156,25 @@
 			this.button_createModel.UseVisualStyleBackColor = true;
 			this.button_createModel.Click += new System.EventHandler(this.OnClickButtonCreateModel);
 			// 
+			// timer
+			// 
+			this.timer.Tick += new System.EventHandler(this.OnTickTimer);
+			// 
+			// toolStripProgressBar1
+			// 
+			this.toolStripProgressBar1.Name = "toolStripProgressBar1";
+			this.toolStripProgressBar1.Size = new System.Drawing.Size(100, 15);
+			// 
 			// MainForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.BackColor = System.Drawing.SystemColors.Control;
 			this.ClientSize = new System.Drawing.Size(1534, 767);
 			this.Controls.Add(this.button_createModel);
-			this.Controls.Add(this.button2);
-			this.Controls.Add(this.button1);
+			this.Controls.Add(this.button_start);
+			this.Controls.Add(this.button_stop);
 			this.Controls.Add(this.button_clear);
 			this.Controls.Add(this.chart_energy);
 			this.Controls.Add(this.richTextBox_outputWnd);
@@ -170,14 +184,13 @@
 			this.MaximizeBox = false;
 			this.Name = "MainForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = "ИТФИ ННГУ | Исследование распределения по скоростям молекул двумерного идеального" +
-    " газа";
-			this.Load += new System.EventHandler(this.MainForm_Load);
+			this.Text = "ИТФИ ННГУ | Исследование распределения по скоростям молекул двумерного идеального" + " газа";
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox_visualization)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.chart_energy)).EndInit();
 			this.ResumeLayout(false);
-
 		}
+
+		private System.Windows.Forms.ToolStripProgressBar toolStripProgressBar1;
 
 		#endregion
 
@@ -185,9 +198,10 @@
 		private System.Windows.Forms.RichTextBox richTextBox_outputWnd;
 		private System.Windows.Forms.DataVisualization.Charting.Chart chart_energy;
 		private System.Windows.Forms.Button button_clear;
-		private System.Windows.Forms.Button button1;
-		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button button_stop;
+		private System.Windows.Forms.Button button_start;
 		private System.Windows.Forms.Button button_createModel;
+		private System.Windows.Forms.Timer timer;
 	}
 }
 

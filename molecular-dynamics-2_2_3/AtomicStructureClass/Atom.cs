@@ -7,7 +7,6 @@ namespace molecular_dynamics_2_2_3
 		C,
 		N,
 		Ar,
-		Au
 	}
 
 	public class Atom
@@ -31,7 +30,7 @@ namespace molecular_dynamics_2_2_3
 					case AtomType.C: Weight = 12.0107 * 1.66054e-27; break;
 					case AtomType.N: Weight = 14.0067 * 1.66054e-27; break;
 					case AtomType.Ar: Weight = 39.948 * 1.66054e-27; break;
-					case AtomType.Au: Weight = 196.966569 * 1.66054e-27; break;
+					default: Weight = 39.948 * 1.66054e-27; break;
 				}
 			}
 		}

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace molecular_dynamics_2_2_3
@@ -33,10 +34,7 @@ namespace molecular_dynamics_2_2_3
 		/// <summary>
 		/// Число атомов.
 		/// </summary>
-		public int N
-		{
-			get { return Atoms.Count; }
-		}
+		public int N { set; get; }
 
 		// Характеристики системы.
 		/// <summary>
@@ -103,7 +101,7 @@ namespace molecular_dynamics_2_2_3
 					case AtomType.C: ParamLat = 0.3567; break;
 					case AtomType.N: ParamLat = 0.5661; break;
 					case AtomType.Ar: ParamLat = 0.526; break;
-					case AtomType.Au: ParamLat = 0.40781; break;
+					default: ParamLat = 0.526; break;
 				}
 			}
 		}
@@ -137,26 +135,10 @@ namespace molecular_dynamics_2_2_3
 		private readonly PotentialModifiedLJ _potential;
 
 		/// <summary>
-		/// Конструктор по умолчанию.
+		/// Инициализация и создание упорядоченной атомной структуры.
 		/// </summary>
-		public AtomicStructure(int size, double paramLat, AtomType atomType)
-		{
-			_rnd = new Random(DateTime.Now.Millisecond);
-			_potential = new PotentialModifiedLJ(atomType);
-			Atoms = new List<Atom>();
-			AtomType = atomType;
-			Size = size;
-			ParamLat = paramLat;
-		}
-
-		/// <summary>
-		/// Инициализация и создание атомной структуры.
-		/// </summary>
-		/// <param name="size"></param>
+		/// <param name="size">Размер расчётной ячейки</param>
 		/// <param name="atomType"></param>
-		/// <param name="potentialType"></param>
-		/// <param name="vmax"></param>
-		/// <param name="coefСircum"></param>
 		public AtomicStructure(int size, AtomType atomType)
 		{
 			_rnd = new Random(DateTime.Now.Millisecond);
@@ -164,10 +146,34 @@ namespace molecular_dynamics_2_2_3
 			Atoms = new List<Atom>();
 
 			Size = size;
+			N = size * size * 2;
 			AtomType = atomType;
 
 			// Начальное размещение атомов.
 			InitPlacement();
+
+			// Вычисление начальных параметров системы.
+			InitCalculation();
+		}
+
+		/// <summary>
+		/// Инициализация и создание случайной атомной структуры.
+		/// </summary>
+		/// <param name="size">Размер расчётной ячейки</param>
+		/// <param name="N">Число атомов.</param>
+		/// <param name="atomType">Тип атомов.</param>
+		public AtomicStructure(int size, int N, AtomType atomType)
+		{
+			_rnd = new Random(DateTime.Now.Millisecond);
+			_potential = new PotentialModifiedLJ(atomType);
+			Atoms = new List<Atom>();
+
+			Size = size;
+			this.N = N;
+			AtomType = atomType;
+
+			// Начальное размещение атомов.
+			InitPlaсementRandom();
 
 			// Вычисление начальных параметров системы.
 			InitCalculation();
@@ -183,13 +189,11 @@ namespace molecular_dynamics_2_2_3
 			while (true)
 			{
 				sum = Vector2D.Zero;
-				foreach (var atom in Atoms)
-					sum += atom.Velocity;
+				Atoms.ForEach(atom => sum += atom.Velocity);
 				sum /= N;
 
 				if (Math.Abs(sum.X + sum.Y) > eps)
-					foreach (var atom in Atoms)
-						atom.Velocity -= sum;
+					Atoms.ForEach(atom => atom.Velocity -= sum);
 				else break;
 			}
 		}
@@ -200,11 +204,11 @@ namespace molecular_dynamics_2_2_3
 		/// <param name="k">Коэффициент смещения.</param>
 		public void AtomsDisplacement(double k)
 		{
-			foreach (var atom in Atoms)
+			Atoms.ForEach(atom =>
 			{
-				Vector2D displacement = (-1 * Vector2D.One + 2 * new Vector2D(_rnd.NextDouble(), _rnd.NextDouble())) * k * ParamLat;
+				var displacement = (-1 * Vector2D.One + 2 * new Vector2D(_rnd.NextDouble(), _rnd.NextDouble())) * k * ParamLat;
 				atom.Position = Periodic(atom.Position + displacement);
-			}
+			});
 		}
 
 		/// <summary>
@@ -254,7 +258,7 @@ namespace molecular_dynamics_2_2_3
 		/// <returns></returns>
 		private Vector2D Periodic(Vector2D pos)
 		{
-			Vector2D newPos = Vector2D.Zero;
+			var newPos = Vector2D.Zero;
 
 			if (pos.X > L) newPos.X = pos.X - L;
 			else if (pos.X < 0) newPos.X = L + pos.X;
@@ -273,13 +277,11 @@ namespace molecular_dynamics_2_2_3
 		/// <param name="T"></param>
 		public void InitVelocityNormalization(double T)
 		{
-			double Vsqrt = Math.Sqrt(3 * kB * T / Atoms[0].Weight);
-			foreach (var atom in Atoms)
-			{
-				double pi2 = 2 * Math.PI;
-				atom.Velocity = new Vector2D(Math.Sin(pi2 * _rnd.NextDouble()), Math.Cos(pi2 * _rnd.NextDouble())) * Vsqrt;
-				atom.Velocity = (-1 * Vector2D.One + 2 * new Vector2D(_rnd.NextDouble(), _rnd.NextDouble())) * Vsqrt;
-			}
+			var vsqrt = Math.Sqrt(3 * kB * T / Atoms[0].Weight);
+			const double pi2 = 2 * Math.PI;
+			Atoms.ForEach(atom =>
+				atom.Velocity = new Vector2D(Math.Sin(pi2 * _rnd.NextDouble()), Math.Cos(pi2 * _rnd.NextDouble())) *
+				                vsqrt);
 		}
 
 		/// <summary>
@@ -287,26 +289,9 @@ namespace molecular_dynamics_2_2_3
 		/// </summary>
 		public void VelocityNormalization(int T)
 		{
-			double sum = 0;
-			foreach (var atom in Atoms)
-				sum += atom.Weight * atom.Velocity.SquaredMagnitude();
-			double beta = Math.Sqrt(3 * N * kB * T / sum);
-			foreach (var atom in Atoms)
-				atom.Velocity *= beta;
-		}
-
-		/// <summary>
-		/// Средний квадрат смещения.
-		/// </summary>
-		/// <param name="rt1"></param>
-		/// <param name="rt2"></param>
-		/// <returns></returns>
-		public double AverageSquareOffset(List<Vector2D> rt1, List<Vector2D> rt2)
-		{
-			double sum = 0;
-			for (int i = 0; i < rt1.Count; i++)
-				sum += (rt2[i] - rt1[i]).SquaredMagnitude();
-			return sum / N;
+			var sum = Atoms.Sum(atom => atom.Weight * atom.Velocity.SquaredMagnitude());
+			var beta = Math.Sqrt(3 * N * kB * T / sum);
+			Atoms.ForEach(atom => atom.Velocity *= beta);
 		}
 	}
 }

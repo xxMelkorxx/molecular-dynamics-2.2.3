@@ -11,7 +11,7 @@ namespace molecular_dynamics_2_2_3
 				case AtomType.C: InitPlaсementFCC(); break;
 				case AtomType.N: InitPlaсementFCC(); break;
 				case AtomType.Ar: InitPlaсementFCC(); break;
-				case AtomType.Au: InitPlaсementFCC(); break;
+				default: InitPlaсementFCC(); break;
 			}
 		}
 
@@ -35,11 +35,11 @@ namespace molecular_dynamics_2_2_3
 		/// </summary>
 		private void InitPlaсementFCC()
 		{
-			for (int i = 0; i < Size; i++)
-				for (int j = 0; j < Size; j++)
+			for (var i = 0; i < Size; i++)
+				for (var j = 0; j < Size; j++)
 				{
 					// Индекс ячейки.
-					int idxCell = 2 * (Size * i + j);
+					var idxCell = 2 * (Size * i + j);
 					// ГЦК-решётка.
 					Atoms.Add(new Atom(idxCell + 1, AtomType, new Vector2D(i, j) * ParamLat));
 					Atoms.Add(new Atom(idxCell + 2, AtomType, new Vector2D(i + 0.5, j + 0.5) * ParamLat));
@@ -49,9 +49,9 @@ namespace molecular_dynamics_2_2_3
 		/// <summary>
 		/// Начальное размещение атомов случайным образом.
 		/// </summary>
-		private void InitPlaсementRandom()
+		public void InitPlaсementRandom()
 		{
-			for (int i = 0; i < N; i++)
+			for (var i = 0; i < N; i++)
 				Atoms.Add(new Atom(i, AtomType, new Vector2D(_rnd.NextDouble() * L, _rnd.NextDouble() * L)));
 		}
 	}

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,8 +12,10 @@ namespace molecular_dynamics_2_2_3
 	{
 		private Drawing _drawing;
 		private AtomicStructure _atomic;
-		private AtomType atomType;
+		private AtomType _atomType;
 		private int _iter;
+		private List<double> _ke, _pe, _fe;
+		private double _dt;
 
 		public MainForm()
 		{
@@ -25,16 +25,18 @@ namespace molecular_dynamics_2_2_3
 		private void OnClickButtonCreateModel(object sender, EventArgs e)
 		{
 			richTextBox_outputWnd.Clear();
-			
-			atomType = AtomType.Ar;
-			int size = 10;
-			double displacement = 0.001;
-			bool isDisplacement = false;
 
-			_atomic = new AtomicStructure(size, atomType);
+			const int size = 10;
+			const double displacement = 0.001;
+			const double temp = 300;
+			const bool isDisplacement = false;
+
+			_atomType = AtomType.Ar;
+			//_atomic = new AtomicStructure(size, AtomType.Ar);
+			_atomic = new AtomicStructure(size, 100, _atomType);
+
 			_drawing = new Drawing(pictureBox_visualization, 0, 0, _atomic.L, _atomic.L);
-			_drawing.Clear();
-
+			
 			if (isDisplacement)
 			{
 				_atomic.AtomsDisplacement(displacement);
@@ -43,8 +45,54 @@ namespace molecular_dynamics_2_2_3
 
 			_drawing.DrawAtoms(Color.White, _atomic.Atoms, _atomic.L);
 
-			richTextBox_outputWnd.Text += InitInfoSystem();
+			//_atomic.InitVelocityNormalization(temp);
+			//_atomic.PulseZeroing();
+			_iter = 0;
 
+			// Вывод начальной информации.
+			richTextBox_outputWnd.AppendText(InitInfoSystem());
+
+			button_start.Enabled = true;
+		}
+
+		private void OnClickButtonStart(object sender, EventArgs e)
+		{
+			if (button_start.Text == "Запуск моделирования")
+			{
+				_atomic.dt = 1e-15;
+				//_ke = new List<double> { _atomic.KinEnergy };
+				//_pe = new List<double> { _atomic.PotEnergy };
+				//_fe = new List<double> { _atomic.FullEnergy };
+				_iter++;
+
+				// Вывод начальной информации.
+				richTextBox_outputWnd.AppendText("\nЗапуск моделирования...\n");
+				richTextBox_outputWnd.AppendText(TableHeader());
+				richTextBox_outputWnd.AppendText(TableData(_iter));
+
+				button_start.Text = "Остановить";
+				timer.Start();
+			}
+			else if (button_start.Text == "Остановить")
+			{
+				richTextBox_outputWnd.AppendText("Моделирование остановлено...");
+
+				button_start.Text = "Запуск моделирования";
+				timer.Stop();
+			}
+		}
+
+		private void OnTickTimer(object sender, EventArgs e)
+		{
+			_atomic.Verlet();
+			_iter++;
+
+			richTextBox_outputWnd.AppendText(TableData(_iter));
+			richTextBox_outputWnd.SelectionStart = richTextBox_outputWnd.Text.Length;
+			richTextBox_outputWnd.ScrollToCaret();
+
+			_drawing.DrawAtoms(Color.White, _atomic.Atoms, _atomic.L);
+			Application.DoEvents();
 		}
 
 		/// <summary>
@@ -53,7 +101,7 @@ namespace molecular_dynamics_2_2_3
 		/// <returns></returns>
 		private string InitInfoSystem()
 		{
-			string text = "Структура создана...\n";
+			var text = "Структура создана...\n";
 			text += string.Format("Тип атомов - {0}\n", _atomic.AtomType);
 			text += string.Format("Размер структуры (Nx/Ny) - {0}/{0}\n", _atomic.Size);
 			text += string.Format("Размер структуры (Lx/Ly) - {0}/{0} нм\n", _atomic.L);
@@ -109,15 +157,10 @@ namespace molecular_dynamics_2_2_3
 		/// <param name="freq">Частота сигнала.</param>
 		/// <param name="duration">Длительность сигнала (мкс).</param>
 		/// <param name="count">Повторений.</param>
-		private void AlarmBeep(int freq, int duration, int count)
+		private static void AlarmBeep(int freq, int duration, int count)
 		{
-			for (int i = 0; i < count; i++)
+			for (var i = 0; i < count; i++)
 				Console.Beep(freq, duration);
-		}
-
-		private void MainForm_Load(object sender, EventArgs e)
-		{
-
 		}
 	}
 }
