@@ -140,9 +140,6 @@ namespace molecular_dynamics_2_2_3
 
             // Начальное размещение атомов.
             InitPlaсementFcc();
-
-            // Вычисление начальных параметров системы.
-            InitCalculation();
         }
 
         /// <summary>
@@ -163,9 +160,6 @@ namespace molecular_dynamics_2_2_3
 
             // Начальное размещение атомов.
             InitPlaсementRandom();
-
-            // Вычисление начальных параметров системы.
-            InitCalculation();
         }
 
         /// <summary>
@@ -277,7 +271,7 @@ namespace molecular_dynamics_2_2_3
         /// <summary>
         /// Перенормировка скоростей к заданной температуре.
         /// </summary>
-        public void VelocityNormalization(int T)
+        public void VelocityNormalization(double T)
         {
             var sum = Atoms.Sum(atom => atom.Weight * atom.Velocity.SquaredMagnitude());
             var beta = Math.Sqrt(3 * CountAtoms * kB * T / sum);
