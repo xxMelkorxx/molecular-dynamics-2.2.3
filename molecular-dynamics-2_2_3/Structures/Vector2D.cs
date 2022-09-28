@@ -13,30 +13,29 @@ namespace molecular_dynamics_2_2_3
         /// <param name="y">Координата y.</param>
         public Vector2D(double x, double y)
         {
-            X = x; Y = y;
+            X = x;
+            Y = y;
         }
+
         /// <summary>
         /// Нулевой вектор.
         /// </summary>
-        public static Vector2D Zero
-        {
-            get { return new Vector2D(0, 0); }
-        }
+        public static Vector2D Zero => new Vector2D(0, 0);
+
         /// <summary>
         /// Единичный вектор.
         /// </summary>
-        public static Vector2D One
-        {
-            get { return new Vector2D(1, 1); }
-        }
+        public static Vector2D One => new Vector2D(1, 1);
+
         /// <summary>
         /// Длина вектора до точки.
         /// </summary>
-        /// <param name="vector">Конечная точка.</param>
-        public double Magnitude(Vector2D vector)
+        /// <param name="vec">Конечная точка.</param>
+        public double Magnitude(Vector2D vec)
         {
-            return Math.Sqrt(Math.Pow(vector.X - X, 2) + Math.Pow(vector.Y - Y, 2));
+            return Math.Sqrt((vec.X - X) * (vec.X - X) + (vec.Y - Y) * (vec.Y - Y));
         }
+
         /// <summary>
         /// Длина вектора.
         /// </summary>
@@ -44,36 +43,35 @@ namespace molecular_dynamics_2_2_3
         {
             return Math.Sqrt(SquaredMagnitude());
         }
+
         /// <summary>
-        /// Длина вектора.
+        /// Расстояние между точками.
         /// </summary>
-        /// <param name="vector1">Начальная точка.</param>
-        /// <param name="vector2">Конечная точка.</param>
+        /// <param name="vec1">Начальная точка.</param>
+        /// <param name="vec2">Конечная точка.</param>
         /// <returns></returns>
-        public static double Magnitude(Vector2D vector1, Vector2D vector2)
+        public static double Magnitude(Vector2D vec1, Vector2D vec2)
         {
-            return Math.Sqrt(Math.Pow(vector2.X - vector1.X, 2) + Math.Pow(vector2.Y - vector1.Y, 2));
+            return Math.Sqrt((vec2.X - vec1.X) * (vec2.X - vec1.X) + (vec2.Y - vec1.Y) * (vec2.Y - vec1.Y));
         }
+
         public double SquaredMagnitude()
-		{
+        {
             return X * X + Y * Y;
         }
+
         /// <summary>
         /// Возвращает значение наибольшей координаты.
         /// </summary>
         /// <returns></returns>
-        public double GetMax()
-        {
-            return (X >= Y) ? X : Y;
-        }
+        public double GetMax() => X >= Y ? X : Y;
+
         /// <summary>
         /// Возвращает значение наименьшей координаты.
         /// </summary>
         /// <returns></returns>
-        public double GetMin()
-        {
-            return (X <= Y) ? X : Y;
-        }
+        public double GetMin() => X <= Y ? X : Y;
+
         /// <summary>
         /// Сложение координат.
         /// </summary>
@@ -84,6 +82,7 @@ namespace molecular_dynamics_2_2_3
         {
             return new Vector2D(vec1.X + vec2.X, vec1.Y + vec2.Y);
         }
+
         /// <summary>
         /// Сложение координат.
         /// </summary>
@@ -94,6 +93,7 @@ namespace molecular_dynamics_2_2_3
         {
             return new Vector2D(vec1.X + value, vec1.Y + value);
         }
+
         /// <summary>
         /// Вычитание из одной координаты другой координаты.
         /// </summary>
@@ -104,6 +104,7 @@ namespace molecular_dynamics_2_2_3
         {
             return new Vector2D(vec1.X - vec2.X, vec1.Y - vec2.Y);
         }
+
         /// <summary>
         /// Вычитание из одной координаты другой координаты.
         /// </summary>
@@ -114,6 +115,7 @@ namespace molecular_dynamics_2_2_3
         {
             return new Vector2D(vec1.X - value, vec1.Y - value);
         }
+
         /// <summary>
         /// Перемножение координат.
         /// </summary>
@@ -124,16 +126,7 @@ namespace molecular_dynamics_2_2_3
         {
             return new Vector2D(vec1.X * vec2.X, vec1.Y * vec2.Y);
         }
-        /// <summary>
-        /// Деление одной координаты на другую.
-        /// </summary>
-        /// <param name="vec1">Первая координата.</param>
-        /// <param name="vec2">Вторая координата.</param>
-        /// <returns></returns>
-        public static Vector2D operator /(Vector2D vec1, Vector2D vec2)
-        {
-            return new Vector2D(vec1.X / vec2.X, vec1.Y / vec2.Y);
-        }
+
         /// <summary>
         /// Умножение числа с плавающей запятой на точку справа.
         /// </summary>
@@ -144,6 +137,7 @@ namespace molecular_dynamics_2_2_3
         {
             return new Vector2D(vec.X * num, vec.Y * num);
         }
+
         /// <summary>
         /// Умножение целого числа на точку справа.
         /// </summary>
@@ -154,6 +148,7 @@ namespace molecular_dynamics_2_2_3
         {
             return new Vector2D(vec.X * num, vec.Y * num);
         }
+
         /// <summary>
         /// Умножение числа с плавающей запятой на точку слева.
         /// </summary>
@@ -164,6 +159,7 @@ namespace molecular_dynamics_2_2_3
         {
             return new Vector2D(vec.X * num, vec.Y * num);
         }
+
         /// <summary>
         /// Умножение целого числа на точку слева.
         /// </summary>
@@ -174,6 +170,18 @@ namespace molecular_dynamics_2_2_3
         {
             return new Vector2D(vec.X * num, vec.Y * num);
         }
+
+        /// <summary>
+        /// Деление одной координаты на другую.
+        /// </summary>
+        /// <param name="vec1">Первая координата.</param>
+        /// <param name="vec2">Вторая координата.</param>
+        /// <returns></returns>
+        public static Vector2D operator /(Vector2D vec1, Vector2D vec2)
+        {
+            return new Vector2D(vec1.X / vec2.X, vec1.Y / vec2.Y);
+        }
+
         /// <summary>
         /// Деление точки на число с плавающей запятой.
         /// </summary>
@@ -184,6 +192,7 @@ namespace molecular_dynamics_2_2_3
         {
             return new Vector2D(vec.X / num, vec.Y / num);
         }
+
         /// <summary>
         /// Деление точки на целое число.
         /// </summary>

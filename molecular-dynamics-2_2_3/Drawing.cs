@@ -92,6 +92,8 @@ namespace molecular_dynamics_2_2_3
 		private void DrawFillEllipse(Color color, double x, double y, double width, double height)
 		{
 			var brush = new SolidBrush(color);
+			
+			
 			_graphics.FillEllipse(brush, OutX(x) - OutX(width) / 2, OutY(y) - OutY(height) / 2, OutX(width), OutY(height));
 			_graphics.Flush();
 		}
@@ -101,10 +103,10 @@ namespace molecular_dynamics_2_2_3
 		/// </summary>
 		/// <param name="color">Цвет атомов.</param>
 		/// <param name="atoms">Список атомов.</param>
-		/// <param name="l">Размер расчётной ячейки.</param>
-		public void DrawAtoms(Color color, List<Atom> atoms, double l)
+		/// <param name="r0">Радиус шарика.</param>
+		public void DrawAtoms(Color color, List<Atom> atoms, double r0)
 		{
-			atoms.ForEach(atom => DrawFillEllipse(color, atom.Position.X, atom.Position.Y, 0.01 * l, 0.01 * l));
+			atoms.ForEach(atom => DrawFillEllipse(color, atom.Position.X, atom.Position.Y, r0, r0));
 		}
 	}
 }

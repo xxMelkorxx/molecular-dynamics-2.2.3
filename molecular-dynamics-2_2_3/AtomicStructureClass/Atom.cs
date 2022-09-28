@@ -2,74 +2,75 @@
 
 namespace molecular_dynamics_2_2_3
 {
-	public enum AtomType
-	{
-		C,
-		N,
-		Ar,
-	}
+    public enum AtomType
+    {
+        Ar
+    }
 
-	public class Atom
-	{
-		/// <summary>
-		/// Индекс атома.
-		/// </summary>
-		public int ID { get; set; }
+    public class Atom
+    {
+        /// <summary>
+        /// Индекс атома.
+        /// </summary>
+        public int Id { get; set; }
 
-		/// <summary>
-		/// Тип атома.
-		/// </summary>
-		public AtomType Type
-		{
-			get { return _type; }
-			set
-			{
-				_type = value;
-				switch (_type)
-				{
-					case AtomType.C: Weight = 12.0107 * 1.66054e-27; break;
-					case AtomType.N: Weight = 14.0067 * 1.66054e-27; break;
-					case AtomType.Ar: Weight = 39.948 * 1.66054e-27; break;
-					default: Weight = 39.948 * 1.66054e-27; break;
-				}
-			}
-		}
-		private AtomType _type;
+        /// <summary>
+        /// Тип атома.
+        /// </summary>
+        public AtomType Type
+        {
+            get => _type;
+            set
+            {
+                _type = value;
+                switch (_type)
+                {
+                    case AtomType.Ar:
+                        Weight = 39.948 * 1.66054e-27;
+                        break;
+                    default:
+                        Weight = 39.948 * 1.66054e-27;
+                        break;
+                }
+            }
+        }
 
-		/// <summary>
-		/// Координаты атома.
-		/// </summary>
-		public Vector2D Position { get; set; }
+        private AtomType _type;
 
-		/// <summary>
-		/// Скорость атома.
-		/// </summary>
-		public Vector2D Velocity { get; set; }
+        /// <summary>
+        /// Координаты атома.
+        /// </summary>
+        public Vector2D Position { get; set; }
 
-		/// <summary>
-		/// Ускорение атома.
-		/// </summary>
-		public Vector2D Acceleration { get; set; }
+        /// <summary>
+        /// Скорость атома.
+        /// </summary>
+        public Vector2D Velocity { get; set; }
 
-		/// <summary>
-		/// Масса атома (кг).
-		/// </summary>
-		public double Weight { get; private set; }
+        /// <summary>
+        /// Ускорение атома.
+        /// </summary>
+        public Vector2D Acceleration { get; set; }
 
-		//--------------------------------------------------------------------------------
-		/// <summary>
-		/// Создание атома.
-		/// </summary>
-		/// <param name="id"></param>
-		/// <param name="type"></param>
-		/// <param name="pos"></param>
-		public Atom(int id, AtomType type, Vector2D pos)
-		{
-			ID = id;
-			Type = type;
-			Position = pos;
-			Velocity = Vector2D.Zero;
-			Acceleration = Vector2D.Zero;
-		}
-	}
+        /// <summary>
+        /// Масса атома (кг).
+        /// </summary>
+        public double Weight { get; private set; }
+
+        //--------------------------------------------------------------------------------
+        /// <summary>
+        /// Создание атома.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="type"></param>
+        /// <param name="pos"></param>
+        public Atom(int id, AtomType type, Vector2D pos)
+        {
+            Id = id;
+            Type = type;
+            Position = pos;
+            Velocity = Vector2D.Zero;
+            Acceleration = Vector2D.Zero;
+        }
+    }
 }
