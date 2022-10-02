@@ -92,8 +92,8 @@ namespace molecular_dynamics_2_2_3
         /// <returns></returns>
         public Vector2D Force(double r, Vector2D dxdy)
         {
-            return FLD(r) * dxdy;
-            // return (r < Param.R1) ? FLD(r) * dxdy : ((r > Param.R2) ? Vector2D.Zero : K(r) * Vector2D.One);
+            //return FLD(r) * dxdy;
+            return (r < Param.R1) ? FLD(r) * dxdy : (r > Param.R2) ? Vector2D.Zero : FLD(r)  * dxdy * K(r);
         }
 
         /// <summary>
@@ -103,8 +103,8 @@ namespace molecular_dynamics_2_2_3
         /// <returns></returns>
         public double PotentialEnergy(double r)
         {
-            return PLD(r);
-            // return (r < Param.R1) ? PLD(r) : ((r > Param.R2) ? 0 : PLD(r) * K(r));
+            //return PLD(r);
+            return (r < Param.R1) ? PLD(r) : ((r > Param.R2) ? 0 : PLD(r) * K(r));
         }
 
         /// <summary>

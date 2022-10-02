@@ -124,6 +124,21 @@ namespace molecular_dynamics_2_2_3
         public readonly PotentialMlj potential;
 
         /// <summary>
+        /// Список текущего положения атомов.
+        /// </summary>
+        public List<Vector2D> AtomsPositions
+        {
+            get
+            {
+                _atomsPositions = new List<Vector2D>();
+                Atoms.ForEach(atom => _atomsPositions.Add(atom.Position));
+                return _atomsPositions;
+            }
+        }
+
+        private List<Vector2D> _atomsPositions;
+
+        /// <summary>
         /// Инициализация и создание упорядоченной атомной структуры.
         /// </summary>
         /// <param name="size">Размер расчётной ячейки</param>
@@ -135,7 +150,7 @@ namespace molecular_dynamics_2_2_3
             Atoms = new List<Atom>();
 
             Size = size;
-            CountAtoms = size * size * 2;
+            CountAtoms = size * size;
             AtomType = atomType;
 
             // Начальное размещение атомов.

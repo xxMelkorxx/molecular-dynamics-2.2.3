@@ -13,7 +13,7 @@ namespace molecular_dynamics_2_2_3
     {
         private AtomicStructure _atomic;
         private Thread _thread;
-        private List<Vector2D>[] _atomsPosition;
+        private List<List<Vector2D>> _atomsPosition;
         private int _iter;
         private bool _isNorm;
 
@@ -105,7 +105,7 @@ namespace molecular_dynamics_2_2_3
 
             #endregion
 
-            _atomsPosition = new List<Vector2D>[countStep];
+            _atomsPosition = new List<List<Vector2D>>();
 
             var sync = SynchronizationContext.Current;
             _thread = new Thread(_ =>
@@ -156,11 +156,11 @@ namespace molecular_dynamics_2_2_3
                     ke.Add(_atomic.KinEnergy);
                     pe.Add(_atomic.PotEnergy);
                     fe.Add(_atomic.FullEnergy);
+                    
+                    // Запоминание позиций атомов.
+                    _atomsPosition.Add(_atomic.AtomsPositions);
 
                     var idx = i;
-                    _atomsPosition[idx - _iter] = new List<Vector2D>();
-                    _atomic.Atoms.ForEach(atom => _atomsPosition[idx - _iter].Add(atom.Position));
-
                     sync.Send(__ =>
                     {
                         progressBar_calculation.PerformStep();

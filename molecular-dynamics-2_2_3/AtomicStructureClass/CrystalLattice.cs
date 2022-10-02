@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace molecular_dynamics_2_2_3
 {
     public partial class AtomicStructure
     {
         /// <summary>
-        /// Начальное размещение атомов в ГЦК-решётку.
+        /// Начальное размещение атомов в тетрагональную решётку.
         /// </summary>
         private void InitPlaсementFcc()
         {
@@ -13,10 +14,8 @@ namespace molecular_dynamics_2_2_3
             for (var j = 0; j < Size; j++)
             {
                 // Индекс ячейки.
-                var idxCell = 2 * (Size * i + j);
-                // ГЦК-решётка.
+                var idxCell = Size * i + j;
                 Atoms.Add(new Atom(idxCell + 1, AtomType, new Vector2D(i, j) * ParamLat));
-                Atoms.Add(new Atom(idxCell + 2, AtomType, new Vector2D(i + 0.5, j + 0.5) * ParamLat));
             }
         }
 
@@ -25,8 +24,17 @@ namespace molecular_dynamics_2_2_3
         /// </summary>
         private void InitPlaсementRandom()
         {
+            var positions = new List<Vector2D>();
+            for (var i = 0; i < Size; i++)
+            for (var j = 0; j < Size; j++)
+                positions.Add(new Vector2D(i, j) * ParamLat);
+
             for (var i = 0; i < CountAtoms; i++)
-                Atoms.Add(new Atom(i, AtomType, new Vector2D(_rnd.NextDouble() * L, _rnd.NextDouble() * L)));
+            {
+                var idxPos = _rnd.Next(0, positions.Count);
+                Atoms.Add(new Atom(i, AtomType, positions[idxPos]));
+                positions.RemoveAt(idxPos);
+            }
         }
     }
 }

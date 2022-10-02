@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 
@@ -13,7 +12,6 @@ namespace molecular_dynamics_2_2_3
 		private readonly Graphics _graphics;
 		private readonly Bitmap _bitmap;
 
-		private readonly double _wnd_Xmin, _wnd_Xmax, _wnd_Ymin, _wnd_Ymax;
 		private readonly double _alpha, _beta;
 
 		public Drawing(PictureBox pB, double x1, double y1, double x2, double y2)
@@ -23,13 +21,12 @@ namespace molecular_dynamics_2_2_3
 			_graphics = Graphics.FromImage(_bitmap);
 
 			_graphics.SmoothingMode = SmoothingMode.AntiAlias;
+			
 			_graphics.TranslateTransform(0, _pictureBox.Height);
-			// Относительные размеры окна рисования.
-			_wnd_Xmin = x1; _wnd_Xmax = x2;
-			_wnd_Ymin = y1; _wnd_Ymax = y2;
+			
 			// Вычисление коэффициентов преобразование.
-			_alpha = _pictureBox.Width / (_wnd_Xmax - _wnd_Xmin);
-			_beta = -_pictureBox.Height / (_wnd_Ymax - _wnd_Ymin);
+			_alpha = _pictureBox.Width / (x2 - x1);
+			_beta = -_pictureBox.Height / (y2 - y1);
 
 			_pictureBox.Image = _bitmap;
 		}
@@ -40,6 +37,7 @@ namespace molecular_dynamics_2_2_3
 		public void Clear()
 		{
 			_graphics.Clear(Color.White);
+			_graphics.Flush();
 		}
 
 		/// <summary>
@@ -63,25 +61,6 @@ namespace molecular_dynamics_2_2_3
 		}
 
 		/// <summary>
-		/// Рисует прямую линию между двумя заданными точками.
-		/// </summary>
-		/// <param name="color">Цвет линии.</param>
-		/// <param name="x1">X-положение начальной точки в мировых координатах.</param>
-		/// <param name="y1">Y-положение начальной точки в мировых координатах.</param>
-		/// <param name="x2">X-положение конечной точки в мировых координатах.</param>
-		/// <param name="y2">Y-положение конечной точки в мировых координатах.</param>
-		private void DrawLine(Color color, double x1, double y1, double x2, double y2, float width)
-		{
-			var pen = new Pen(color)
-			{
-				Width = width,
-				DashStyle = DashStyle.Solid
-			};
-			_graphics.DrawLine(pen, OutX(x1), OutY(y1), OutX(x2), OutY(y2));
-			_graphics.Flush();
-		}
-
-		/// <summary>
 		/// Рисует заполненный эллипс.
 		/// </summary>
 		/// <param name="color"></param>
@@ -92,23 +71,20 @@ namespace molecular_dynamics_2_2_3
 		private void DrawFillEllipse(Color color, double x, double y, double width, double height)
 		{
 			var brush = new SolidBrush(color);
+			var pen = new Pen(Color.Black);
 			_graphics.FillEllipse(brush, OutX(x) - OutX(width) / 2, OutY(y) - OutY(height) / 2, OutX(width), OutY(height));
+			_graphics.DrawEllipse(pen, OutX(x) - OutX(width) / 2, OutY(y) - OutY(height) / 2, OutX(width), OutY(height));
 			_graphics.Flush();
 		}
 
 		/// <summary>
 		/// Рисует атомы в области расчётной ячейки.
 		/// </summary>
-		/// <param name="color">Цвет атомов.</param>
 		/// <param name="positions">Список атомов.</param>
 		/// <param name="r0">Радиус шарика.</param>
-		public void DrawAtoms(Color color, List<Vector2D> positions, double r0)
+		public void DrawAtoms(List<Vector2D> positions, double r0)
 		{
-			for (int i = 0; i < positions.Count; i++)
-			{
-				DrawFillEllipse(color, positions[i].X, positions[i].Y, r0, r0);
-			}
-			//positions.ForEach(pos => DrawFillEllipse(color, pos.X, pos.Y, r0, r0));
+			positions.ForEach(pos => DrawFillEllipse(Color.Blue, pos.X, pos.Y, r0, r0));
 		}
 	}
 }
