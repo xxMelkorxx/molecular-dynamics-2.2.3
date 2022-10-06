@@ -56,7 +56,9 @@ namespace molecular_dynamics_2_2_3
                     _atomic = new AtomicStructure(size, countAtoms);
                 
                 // Вычисление начальных параметров системы.
+                // _atomic.AtomsDisplacement(0.01);
                 _atomic.InitCalculation();
+                // _atomsPosition = new List<List<Vector2D>> { _atomic.AtomsPositions };
                 
                 sync.Send(__ =>
                 {
@@ -106,7 +108,7 @@ namespace molecular_dynamics_2_2_3
             #endregion
 
             _atomsPosition = new List<List<Vector2D>>();
-
+            
             var sync = SynchronizationContext.Current;
             _thread = new Thread(_ =>
             {

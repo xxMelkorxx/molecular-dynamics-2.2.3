@@ -9,24 +9,25 @@ namespace molecular_dynamics_2_2_3
     {
         private Drawing _drawing;
         private List<List<Vector2D>> _atomsPositon;
+        private double _l;
         
         public VisualizationForm(List<List<Vector2D>> atomsPositon, double l)
         {
             InitializeComponent();
-            
+            _l = l;
             trackBar_timeStep.Maximum = atomsPositon.Count - 1;
             
-            _drawing = new Drawing(pictureBox_visualizastion, 0, 0, l, l);
-            _drawing.Clear();
+            _drawing = new Drawing(pictureBox_visualizastion, 0, 0, _l, _l);
             _atomsPositon = atomsPositon;
             
-            _drawing.DrawAtoms(_atomsPositon[0], PotentialMlj.ParamsMljAr.R0);
+            _drawing.DrawAtoms(_atomsPositon[0], PotentialMlj.ParamsMljAr.Sigma, _l);
         }
 
-        private void OnAnimation(object sender, EventArgs e)
+        private void OnValueChangedTrackBar(object sender, EventArgs e)
         {
-            _drawing.Clear();
-            _drawing.DrawAtoms(_atomsPositon[trackBar_timeStep.Value], PotentialMlj.ParamsMljAr.R0);
+            var idx = trackBar_timeStep.Value;
+            _drawing = new Drawing(pictureBox_visualizastion, 0, 0, _l, _l);
+            _drawing.DrawAtoms(_atomsPositon[idx], PotentialMlj.ParamsMljAr.Sigma, _l);
         }
 
         private void OnStartAnimation(object sender, EventArgs e)

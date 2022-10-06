@@ -47,6 +47,7 @@ namespace molecular_dynamics_2_2_3
             this.pictureBox_visualizastion.Location = new System.Drawing.Point(14, 13);
             this.pictureBox_visualizastion.Name = "pictureBox_visualizastion";
             this.pictureBox_visualizastion.Size = new System.Drawing.Size(600, 600);
+            this.pictureBox_visualizastion.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox_visualizastion.TabIndex = 0;
             this.pictureBox_visualizastion.TabStop = false;
             // 
@@ -58,10 +59,11 @@ namespace molecular_dynamics_2_2_3
             this.trackBar_timeStep.Size = new System.Drawing.Size(600, 45);
             this.trackBar_timeStep.TabIndex = 1;
             this.trackBar_timeStep.TickStyle = System.Windows.Forms.TickStyle.Both;
-            this.trackBar_timeStep.ValueChanged += new System.EventHandler(this.OnAnimation);
+            this.trackBar_timeStep.ValueChanged += new System.EventHandler(this.OnValueChangedTrackBar);
             // 
             // timer
             // 
+            this.timer.Interval = 1;
             this.timer.Tick += new System.EventHandler(this.OnTickTimer);
             // 
             // button_start

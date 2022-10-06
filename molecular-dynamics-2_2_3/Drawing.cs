@@ -8,10 +8,9 @@ namespace molecular_dynamics_2_2_3
 {
 	public class Drawing
 	{
-		private readonly PictureBox _pictureBox;
-		private readonly Graphics _graphics;
-		private readonly Bitmap _bitmap;
-
+		private PictureBox _pictureBox;
+		private Graphics _graphics;
+		private Bitmap _bitmap;
 		private readonly double _alpha, _beta;
 
 		public Drawing(PictureBox pB, double x1, double y1, double x2, double y2)
@@ -19,9 +18,7 @@ namespace molecular_dynamics_2_2_3
 			_pictureBox = pB;
 			_bitmap = new Bitmap(_pictureBox.Width, _pictureBox.Height);
 			_graphics = Graphics.FromImage(_bitmap);
-
 			_graphics.SmoothingMode = SmoothingMode.AntiAlias;
-			
 			_graphics.TranslateTransform(0, _pictureBox.Height);
 			
 			// Вычисление коэффициентов преобразование.
@@ -37,7 +34,7 @@ namespace molecular_dynamics_2_2_3
 		public void Clear()
 		{
 			_graphics.Clear(Color.White);
-			_graphics.Flush();
+			// _graphics.Flush();
 		}
 
 		/// <summary>
@@ -74,7 +71,6 @@ namespace molecular_dynamics_2_2_3
 			var pen = new Pen(Color.Black);
 			_graphics.FillEllipse(brush, OutX(x) - OutX(width) / 2, OutY(y) - OutY(height) / 2, OutX(width), OutY(height));
 			_graphics.DrawEllipse(pen, OutX(x) - OutX(width) / 2, OutY(y) - OutY(height) / 2, OutX(width), OutY(height));
-			_graphics.Flush();
 		}
 
 		/// <summary>
@@ -82,9 +78,36 @@ namespace molecular_dynamics_2_2_3
 		/// </summary>
 		/// <param name="positions">Список атомов.</param>
 		/// <param name="r0">Радиус шарика.</param>
-		public void DrawAtoms(List<Vector2D> positions, double r0)
+		public void DrawAtoms(List<Vector2D> positions, double r0, double l)
 		{
-			positions.ForEach(pos => DrawFillEllipse(Color.Blue, pos.X, pos.Y, r0, r0));
+			positions.ForEach(pos =>
+			{
+				var periodicPos = pos;
+				var isPeriodic = false;
+				DrawFillEllipse(Color.Blue, pos.X, pos.Y, r0, r0);
+				if (pos.X <= r0)
+				{
+					periodicPos = new Vector2D(periodicPos.X + l, periodicPos.Y);
+					isPeriodic = true;
+				}
+				if (l - pos.X <= r0)
+				{
+					periodicPos = new Vector2D(periodicPos.X - l, periodicPos.Y);
+					isPeriodic = true;
+				}
+				if (pos.Y <= r0)
+				{
+					periodicPos = new Vector2D(periodicPos.X, periodicPos.Y + l);
+					isPeriodic = true;
+				}
+				if (l - pos.Y <= r0)
+				{
+					periodicPos = new Vector2D(periodicPos.X, periodicPos.Y - l);
+					isPeriodic = true;
+				}
+				if (isPeriodic) 			
+					DrawFillEllipse(Color.Blue, periodicPos.X, periodicPos.Y, r0, r0);
+			});
 		}
 	}
 }
