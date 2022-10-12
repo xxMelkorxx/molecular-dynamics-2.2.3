@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
@@ -34,7 +33,6 @@ namespace molecular_dynamics_2_2_3
 		public void Clear()
 		{
 			_graphics.Clear(Color.White);
-			// _graphics.Flush();
 		}
 
 		/// <summary>
@@ -77,36 +75,37 @@ namespace molecular_dynamics_2_2_3
 		/// Рисует атомы в области расчётной ячейки.
 		/// </summary>
 		/// <param name="positions">Список атомов.</param>
-		/// <param name="r0">Радиус шарика.</param>
-		public void DrawAtoms(List<Vector2D> positions, double r0, double l)
+		/// <param name="r">Радиус шарика.</param>
+		/// <param name="l">Размер расчётной ячейки.</param>
+		public void DrawAtoms(List<Vector2D> positions, double r, double l)
 		{
 			positions.ForEach(pos =>
 			{
 				var periodicPos = pos;
 				var isPeriodic = false;
-				DrawFillEllipse(Color.Blue, pos.X, pos.Y, r0, r0);
-				if (pos.X <= r0)
+				DrawFillEllipse(Color.Blue, pos.X, pos.Y, r, r);
+				if (pos.X <= r)
 				{
 					periodicPos = new Vector2D(periodicPos.X + l, periodicPos.Y);
 					isPeriodic = true;
 				}
-				if (l - pos.X <= r0)
+				if (l - pos.X <= r)
 				{
 					periodicPos = new Vector2D(periodicPos.X - l, periodicPos.Y);
 					isPeriodic = true;
 				}
-				if (pos.Y <= r0)
+				if (pos.Y <= r)
 				{
 					periodicPos = new Vector2D(periodicPos.X, periodicPos.Y + l);
 					isPeriodic = true;
 				}
-				if (l - pos.Y <= r0)
+				if (l - pos.Y <= r)
 				{
 					periodicPos = new Vector2D(periodicPos.X, periodicPos.Y - l);
 					isPeriodic = true;
 				}
 				if (isPeriodic) 			
-					DrawFillEllipse(Color.Blue, periodicPos.X, periodicPos.Y, r0, r0);
+					DrawFillEllipse(Color.Blue, periodicPos.X, periodicPos.Y, r, r);
 			});
 		}
 	}

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace molecular_dynamics_2_2_3
+﻿namespace molecular_dynamics_2_2_3
 {
     public partial class AtomicStructure
     {

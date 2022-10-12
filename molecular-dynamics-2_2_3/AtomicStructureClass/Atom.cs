@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace molecular_dynamics_2_2_3
+﻿namespace molecular_dynamics_2_2_3
 {
     public enum AtomType
     {
@@ -10,7 +8,7 @@ namespace molecular_dynamics_2_2_3
     public class Atom
     {
         /// <summary>
-        /// Индекс атома.
+        /// ID атома.
         /// </summary>
         public int Id { get; set; }
 

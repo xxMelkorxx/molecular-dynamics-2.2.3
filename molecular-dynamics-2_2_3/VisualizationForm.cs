@@ -1,7 +1,6 @@
 using System;
 using System.Windows.Forms;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace molecular_dynamics_2_2_3
 {

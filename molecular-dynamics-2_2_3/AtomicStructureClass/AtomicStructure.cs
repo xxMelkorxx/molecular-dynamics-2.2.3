@@ -292,5 +292,27 @@ namespace molecular_dynamics_2_2_3
             var beta = Math.Sqrt(3 * CountAtoms * kB * T / sum);
             Atoms.ForEach(atom => atom.Velocity *= beta);
         }
+
+        /// <summary>
+        /// Распределение атомов по скоростям.
+        /// </summary>
+        /// <param name="dV"></param>
+        /// <returns></returns>
+        public int[] GetSpeedDistribution(out double dV)
+        {
+            const int intervals = 50;
+
+            var atomsVelocities = new List<double>();
+            Atoms.ForEach(atom => atomsVelocities.Add(atom.Velocity.Magnitude() * 1e-9));
+
+            var maxSpeed = atomsVelocities.Max();
+            var deltaSpeed = 2.0 * maxSpeed / intervals;
+            dV = deltaSpeed;
+
+            var speedDistribution = new int[intervals];
+            atomsVelocities.ForEach(vel => speedDistribution[(int)(vel / deltaSpeed)]++);
+
+            return speedDistribution;
+        }
     }
 }
