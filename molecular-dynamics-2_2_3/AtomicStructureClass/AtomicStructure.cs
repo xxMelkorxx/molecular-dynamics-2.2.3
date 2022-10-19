@@ -96,6 +96,8 @@ namespace molecular_dynamics_2_2_3
 
         #endregion
 
+        public double Vsqrt;
+
         // Параметры симуляции.
         /// <summary>
         /// Величина временного шага.
@@ -276,11 +278,11 @@ namespace molecular_dynamics_2_2_3
         /// <param name="T"></param>
         public void InitVelocityNormalization(double T)
         {
-            var vsqrt = Math.Sqrt(3 * kB * T / Atoms[0].Weight);
+            Vsqrt = Math.Sqrt(2 * kB * T / Atoms[0].Weight);
             const double pi2 = 2 * Math.PI;
             Atoms.ForEach(atom =>
                 atom.Velocity = new Vector2D(Math.Sin(pi2 * _rnd.NextDouble()), Math.Cos(pi2 * _rnd.NextDouble())) *
-                                vsqrt);
+                                Vsqrt);
         }
 
         /// <summary>
@@ -296,21 +298,18 @@ namespace molecular_dynamics_2_2_3
         /// <summary>
         /// Распределение атомов по скоростям.
         /// </summary>
-        /// <param name="dV"></param>
+        /// <param name="maxSpeed"></param>
+        /// <param name="intervals"></param>
         /// <returns></returns>
-        public int[] GetSpeedDistribution(out double dV)
+        public double[] GetSpeedDistribution(double maxSpeed, int intervals = 50)
         {
-            const int intervals = 50;
-
             var atomsVelocities = new List<double>();
             Atoms.ForEach(atom => atomsVelocities.Add(atom.Velocity.Magnitude() * 1e-9));
 
-            var maxSpeed = atomsVelocities.Max();
             var deltaSpeed = 2.0 * maxSpeed / intervals;
-            dV = deltaSpeed;
 
-            var speedDistribution = new int[intervals];
-            atomsVelocities.ForEach(vel => speedDistribution[(int)(vel / deltaSpeed)]++);
+            var speedDistribution = new double[intervals];
+            atomsVelocities.ForEach(vel => speedDistribution[(int)(vel / deltaSpeed)] += 1.0 / CountAtoms );
 
             return speedDistribution;
         }

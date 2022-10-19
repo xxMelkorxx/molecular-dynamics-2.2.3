@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -10,9 +11,12 @@ namespace molecular_dynamics_2_2_3
         private AtomicStructure _atomic;
         private Thread _thread;
         private List<List<Vector2D>> _atomsPosition;
-        private List<int[]> _speedDistributionList;
+        private List<double[]> _speedDistributionList;
+        private double _maxSpeed;
         private int _iter;
         private bool _isNorm;
+        
+        private const int IntervalsSpeed = 50;
 
         public MainForm()
         {
@@ -105,7 +109,7 @@ namespace molecular_dynamics_2_2_3
             #endregion
 
             _atomsPosition = new List<List<Vector2D>>();
-            _speedDistributionList = new List<int[]>();
+            _speedDistributionList = new List<double[]>();
             
             var sync = SynchronizationContext.Current;
             _thread = new Thread(_ =>
@@ -145,10 +149,12 @@ namespace molecular_dynamics_2_2_3
                     chart_energy.Series[2].Points.AddXY(_iter - 1, fe[0]);
                     
                     // Построение графика распределения скоростей.
-                    _speedDistributionList.Add(_atomic.GetSpeedDistribution(out var dv));
+                    _maxSpeed = _atomic.Atoms.Max(atom => atom.Velocity.Magnitude()) * 1e-9;
+                    _speedDistributionList.Add(_atomic.GetSpeedDistribution(_maxSpeed, IntervalsSpeed));
                     chart_speedDistribution.Series[0].Points.Clear();
                     for (var j = 0; j < _speedDistributionList[0].Length; j++)
-                        chart_speedDistribution.Series[0].Points.AddXY(j, _speedDistributionList[0][j]);
+                        chart_speedDistribution.Series[0].Points.AddXY(j * (_maxSpeed / IntervalsSpeed),
+                            _speedDistributionList[0][j]);
                     
                     // Вывод начальной информации.
                     richTextBox_outputWnd.AppendText("\nЗапуск моделирования...\n");
@@ -170,7 +176,6 @@ namespace molecular_dynamics_2_2_3
                     // Запоминание позиций атомов.
                     _atomsPosition.Add(_atomic.AtomsPositions);
                     
-                    _speedDistributionList.Add(_atomic.GetSpeedDistribution(out var dv));
 
                     var idx = i;
                     sync.Send(__ =>
@@ -178,9 +183,11 @@ namespace molecular_dynamics_2_2_3
                         progressBar_calculation.PerformStep();
 
                         // Построение графика распределения скоростей.
+                        _speedDistributionList.Add(_atomic.GetSpeedDistribution(_maxSpeed, IntervalsSpeed));
                         chart_speedDistribution.Series[0].Points.Clear();
                         for (var j = 0; j < _speedDistributionList[idx - _iter].Length; j++)
-                            chart_speedDistribution.Series[0].Points.AddXY(j, _speedDistributionList[idx - _iter][j]);
+                            chart_speedDistribution.Series[0].Points.AddXY(j * (_maxSpeed / IntervalsSpeed),
+                                _speedDistributionList[idx - _iter][j]);
                         
                         // Вывод данных в RichTextBox.
                         if (idx % snapshotStep == 0 || idx == _iter + countStep - 1)
@@ -206,9 +213,10 @@ namespace molecular_dynamics_2_2_3
                         chart_energy.Series[2].Points.AddXY(i, fe[i - _iter]);
                     }
 
-                    var speedDistributionForm = new SpeedDistributionForm(AverageSpeedDistribution(
-                        _atomic.CountAtoms,
-                        _speedDistributionList));
+                    var speedDistributionForm = new SpeedDistributionForm(
+                        AverageSpeedDistribution(_speedDistributionList),
+                        _maxSpeed, IntervalsSpeed,
+                        _atomic.Vsqrt);
                     speedDistributionForm.Show();
 
                     _iter += countStep;
@@ -290,8 +298,6 @@ namespace molecular_dynamics_2_2_3
             text += string.Format("Потенциальная энергия - {0} эВ\n", _atomic.PotEnergy.ToString("F5"));
             text += string.Format("Полная энергия - {0} эВ\n", _atomic.FullEnergy.ToString("F5"));
             text += string.Format("Температура - {0} К\n", _atomic.Temperature.ToString("F5"));
-            // text += string.Format("Объём - {0} нм³\n", _atomic.Volume.ToString("F5"));
-            // text += string.Format("Давление - {0} бар\n", _atomic.Press.ToString("F0"));
             return text;
         }
 
@@ -341,10 +347,9 @@ namespace molecular_dynamics_2_2_3
         /// <summary>
         /// Рассчёт среднего распределения по скоростям.
         /// </summary>
-        /// <param name="countAtoms"></param>
         /// <param name="speedDistributionList"></param>
         /// <returns></returns>
-        private static double[] AverageSpeedDistribution(int countAtoms, List<int[]> speedDistributionList)
+        private static double[] AverageSpeedDistribution(List<double[]> speedDistributionList)
         {
             var length = speedDistributionList[0].Length;
             var result = new double[length];
@@ -355,9 +360,7 @@ namespace molecular_dynamics_2_2_3
                 for (var j = 0; j < speedDistributionList.Count; j++)
                     average += speedDistributionList[j][i];
 
-                result[i] = average
-                    / countAtoms;
-                    // speedDistributionList.Count;
+                result[i] = average / speedDistributionList.Count;
 			}
 
             return result;

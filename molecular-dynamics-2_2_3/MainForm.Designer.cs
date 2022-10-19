@@ -132,14 +132,26 @@
 			// numUpDown_temp
 			// 
 			this.numUpDown_temp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.numUpDown_temp.Increment = new decimal(new int[] { 10, 0, 0, 0 });
+			this.numUpDown_temp.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
 			this.numUpDown_temp.Location = new System.Drawing.Point(219, 77);
-			this.numUpDown_temp.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
+			this.numUpDown_temp.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
 			this.numUpDown_temp.Name = "numUpDown_temp";
 			this.numUpDown_temp.Size = new System.Drawing.Size(75, 22);
 			this.numUpDown_temp.TabIndex = 12;
 			this.numUpDown_temp.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.numUpDown_temp.Value = new decimal(new int[] { 300, 0, 0, 0 });
+			this.numUpDown_temp.Value = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
 			// 
 			// label_temp
 			// 
@@ -155,12 +167,20 @@
 			// 
 			this.numUpDown_size.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.numUpDown_size.Location = new System.Drawing.Point(219, 21);
-			this.numUpDown_size.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+			this.numUpDown_size.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			this.numUpDown_size.Name = "numUpDown_size";
 			this.numUpDown_size.Size = new System.Drawing.Size(75, 22);
 			this.numUpDown_size.TabIndex = 10;
 			this.numUpDown_size.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.numUpDown_size.Value = new decimal(new int[] { 20, 0, 0, 0 });
+			this.numUpDown_size.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
 			// 
 			// label_size
 			// 
@@ -175,15 +195,31 @@
 			// numUpDown_countAtoms
 			// 
 			this.numUpDown_countAtoms.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.numUpDown_countAtoms.Increment = new decimal(new int[] { 10, 0, 0, 0 });
+			this.numUpDown_countAtoms.Increment = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
 			this.numUpDown_countAtoms.Location = new System.Drawing.Point(219, 49);
-			this.numUpDown_countAtoms.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
-			this.numUpDown_countAtoms.Minimum = new decimal(new int[] { 2, 0, 0, 0 });
+			this.numUpDown_countAtoms.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+			this.numUpDown_countAtoms.Minimum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
 			this.numUpDown_countAtoms.Name = "numUpDown_countAtoms";
 			this.numUpDown_countAtoms.Size = new System.Drawing.Size(75, 22);
 			this.numUpDown_countAtoms.TabIndex = 6;
 			this.numUpDown_countAtoms.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.numUpDown_countAtoms.Value = new decimal(new int[] { 200, 0, 0, 0 });
+			this.numUpDown_countAtoms.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
 			// 
 			// label_countAtoms
 			// 
@@ -235,25 +271,49 @@
 			// 
 			this.numUpDown_dt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.numUpDown_dt.Location = new System.Drawing.Point(183, 21);
-			this.numUpDown_dt.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
-			this.numUpDown_dt.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+			this.numUpDown_dt.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+			this.numUpDown_dt.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			this.numUpDown_dt.Name = "numUpDown_dt";
 			this.numUpDown_dt.Size = new System.Drawing.Size(40, 22);
 			this.numUpDown_dt.TabIndex = 34;
 			this.numUpDown_dt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.numUpDown_dt.Value = new decimal(new int[] { 1, 0, 0, 0 });
+			this.numUpDown_dt.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			// 
 			// numUpDown_dt_e
 			// 
 			this.numUpDown_dt_e.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.numUpDown_dt_e.Location = new System.Drawing.Point(249, 21);
-			this.numUpDown_dt_e.Maximum = new decimal(new int[] { 0, 0, 0, 0 });
-			this.numUpDown_dt_e.Minimum = new decimal(new int[] { 100, 0, 0, -2147483648 });
+			this.numUpDown_dt_e.Maximum = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
+			this.numUpDown_dt_e.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
 			this.numUpDown_dt_e.Name = "numUpDown_dt_e";
 			this.numUpDown_dt_e.Size = new System.Drawing.Size(45, 22);
 			this.numUpDown_dt_e.TabIndex = 33;
 			this.numUpDown_dt_e.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.numUpDown_dt_e.Value = new decimal(new int[] { 14, 0, 0, -2147483648 });
+			this.numUpDown_dt_e.Value = new decimal(new int[] {
+            14,
+            0,
+            0,
+            -2147483648});
 			// 
 			// label_snapshotStep
 			// 
@@ -269,13 +329,25 @@
 			// 
 			this.numUpDown_snapshotStep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.numUpDown_snapshotStep.Location = new System.Drawing.Point(219, 77);
-			this.numUpDown_snapshotStep.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
-			this.numUpDown_snapshotStep.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+			this.numUpDown_snapshotStep.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+			this.numUpDown_snapshotStep.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			this.numUpDown_snapshotStep.Name = "numUpDown_snapshotStep";
 			this.numUpDown_snapshotStep.Size = new System.Drawing.Size(75, 22);
 			this.numUpDown_snapshotStep.TabIndex = 31;
 			this.numUpDown_snapshotStep.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.numUpDown_snapshotStep.Value = new decimal(new int[] { 1, 0, 0, 0 });
+			this.numUpDown_snapshotStep.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			// 
 			// label_countStep
 			// 
@@ -290,15 +362,31 @@
 			// numUpDown_countStep
 			// 
 			this.numUpDown_countStep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.numUpDown_countStep.Increment = new decimal(new int[] { 1000, 0, 0, 0 });
+			this.numUpDown_countStep.Increment = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
 			this.numUpDown_countStep.Location = new System.Drawing.Point(219, 49);
-			this.numUpDown_countStep.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
-			this.numUpDown_countStep.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+			this.numUpDown_countStep.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+			this.numUpDown_countStep.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			this.numUpDown_countStep.Name = "numUpDown_countStep";
 			this.numUpDown_countStep.Size = new System.Drawing.Size(75, 22);
 			this.numUpDown_countStep.TabIndex = 29;
 			this.numUpDown_countStep.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.numUpDown_countStep.Value = new decimal(new int[] { 1000, 0, 0, 0 });
+			this.numUpDown_countStep.Value = new decimal(new int[] {
+            1000,
+            0,
+            0,
+            0});
 			// 
 			// groupBox_info
 			// 
@@ -316,14 +404,15 @@
 			// 
 			this.chart_speedDistribution.BorderlineColor = System.Drawing.Color.DimGray;
 			this.chart_speedDistribution.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
+			chartArea1.AxisX.Interval = 100D;
 			chartArea1.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
 			chartArea1.AxisX.Minimum = 0D;
-			chartArea1.AxisX.Title = "Номер интервала скоростей (i)";
+			chartArea1.AxisX.Title = "Скорость атомов, м/с";
 			chartArea1.AxisX.TitleFont = new System.Drawing.Font("JetBrains Mono", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			chartArea1.AxisX2.TitleFont = new System.Drawing.Font("Cascadia Mono", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			chartArea1.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
 			chartArea1.AxisY.Minimum = 0D;
-			chartArea1.AxisY.Title = "Число атомов n(i)";
+			chartArea1.AxisY.Title = "Отн. число атомов";
 			chartArea1.AxisY.TitleFont = new System.Drawing.Font("JetBrains Mono", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			chartArea1.AxisY2.TitleFont = new System.Drawing.Font("Cascadia Mono", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			chartArea1.Name = "ChartArea1";
@@ -466,7 +555,8 @@
 			// 
 			// progressBar_calculation
 			// 
-			this.progressBar_calculation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
+			this.progressBar_calculation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
 			this.progressBar_calculation.Location = new System.Drawing.Point(12, 718);
 			this.progressBar_calculation.Name = "progressBar_calculation";
 			this.progressBar_calculation.Size = new System.Drawing.Size(623, 25);
@@ -508,6 +598,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.chart_speedDistribution)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.chart_energy)).EndInit();
 			this.ResumeLayout(false);
+
 		}
 		#endregion
 
