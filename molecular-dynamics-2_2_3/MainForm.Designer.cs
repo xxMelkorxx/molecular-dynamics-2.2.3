@@ -51,6 +51,7 @@
 			this.numUpDown_temp = new System.Windows.Forms.NumericUpDown();
 			this.numUpDown_size = new System.Windows.Forms.NumericUpDown();
 			this.numUpDown_countAtoms = new System.Windows.Forms.NumericUpDown();
+			this.checkBox_isSpapshot = new System.Windows.Forms.CheckBox();
 			this.numUpDown_dt = new System.Windows.Forms.NumericUpDown();
 			this.numUpDown_dt_e = new System.Windows.Forms.NumericUpDown();
 			this.numUpDown_snapshotStep = new System.Windows.Forms.NumericUpDown();
@@ -64,6 +65,7 @@
 			this.button_createModel = new System.Windows.Forms.Button();
 			this.button_visualization = new System.Windows.Forms.Button();
 			this.progressBar_calculation = new System.Windows.Forms.ProgressBar();
+			this.button_distributionSpeed = new System.Windows.Forms.Button();
 			groupBox_paramSystem = new System.Windows.Forms.GroupBox();
 			label_temp = new System.Windows.Forms.Label();
 			label_size = new System.Windows.Forms.Label();
@@ -98,20 +100,24 @@
 			groupBox_paramSystem.Controls.Add(label_size);
 			groupBox_paramSystem.Controls.Add(this.numUpDown_countAtoms);
 			groupBox_paramSystem.Controls.Add(label_countAtoms);
-			groupBox_paramSystem.Location = new System.Drawing.Point(797, 12);
+			groupBox_paramSystem.Location = new System.Drawing.Point(701, 13);
+			groupBox_paramSystem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			groupBox_paramSystem.Name = "groupBox_paramSystem";
-			groupBox_paramSystem.Size = new System.Drawing.Size(300, 153);
+			groupBox_paramSystem.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			groupBox_paramSystem.Size = new System.Drawing.Size(288, 187);
 			groupBox_paramSystem.TabIndex = 8;
 			groupBox_paramSystem.TabStop = false;
 			groupBox_paramSystem.Text = "Параметры системы";
 			// 
 			// radioButton_randomSystem
 			// 
+			this.radioButton_randomSystem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.radioButton_randomSystem.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.radioButton_randomSystem.Checked = true;
-			this.radioButton_randomSystem.Location = new System.Drawing.Point(6, 129);
+			this.radioButton_randomSystem.Location = new System.Drawing.Point(13, 155);
+			this.radioButton_randomSystem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.radioButton_randomSystem.Name = "radioButton_randomSystem";
-			this.radioButton_randomSystem.Size = new System.Drawing.Size(288, 18);
+			this.radioButton_randomSystem.Size = new System.Drawing.Size(269, 22);
 			this.radioButton_randomSystem.TabIndex = 15;
 			this.radioButton_randomSystem.TabStop = true;
 			this.radioButton_randomSystem.Text = "Случайная система";
@@ -120,10 +126,12 @@
 			// 
 			// radioButton_orderlySystem
 			// 
+			this.radioButton_orderlySystem.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.radioButton_orderlySystem.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.radioButton_orderlySystem.Location = new System.Drawing.Point(6, 105);
+			this.radioButton_orderlySystem.Location = new System.Drawing.Point(13, 125);
+			this.radioButton_orderlySystem.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.radioButton_orderlySystem.Name = "radioButton_orderlySystem";
-			this.radioButton_orderlySystem.Size = new System.Drawing.Size(288, 18);
+			this.radioButton_orderlySystem.Size = new System.Drawing.Size(269, 22);
 			this.radioButton_orderlySystem.TabIndex = 14;
 			this.radioButton_orderlySystem.Text = "Упорядоченная система";
 			this.radioButton_orderlySystem.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -137,14 +145,20 @@
             0,
             0,
             0});
-			this.numUpDown_temp.Location = new System.Drawing.Point(219, 77);
+			this.numUpDown_temp.Location = new System.Drawing.Point(196, 92);
+			this.numUpDown_temp.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.numUpDown_temp.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
+			this.numUpDown_temp.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
 			this.numUpDown_temp.Name = "numUpDown_temp";
-			this.numUpDown_temp.Size = new System.Drawing.Size(75, 22);
+			this.numUpDown_temp.Size = new System.Drawing.Size(86, 25);
 			this.numUpDown_temp.TabIndex = 12;
 			this.numUpDown_temp.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.numUpDown_temp.Value = new decimal(new int[] {
@@ -156,24 +170,25 @@
 			// label_temp
 			// 
 			label_temp.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			label_temp.Location = new System.Drawing.Point(6, 79);
+			label_temp.Location = new System.Drawing.Point(13, 92);
 			label_temp.Name = "label_temp";
-			label_temp.Size = new System.Drawing.Size(211, 18);
+			label_temp.Size = new System.Drawing.Size(177, 25);
 			label_temp.TabIndex = 13;
-			label_temp.Text = "Начальная температура:";
-			label_temp.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			label_temp.Text = "Температура:";
+			label_temp.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// numUpDown_size
 			// 
 			this.numUpDown_size.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.numUpDown_size.Location = new System.Drawing.Point(219, 21);
+			this.numUpDown_size.Location = new System.Drawing.Point(196, 26);
+			this.numUpDown_size.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.numUpDown_size.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
 			this.numUpDown_size.Name = "numUpDown_size";
-			this.numUpDown_size.Size = new System.Drawing.Size(75, 22);
+			this.numUpDown_size.Size = new System.Drawing.Size(86, 25);
 			this.numUpDown_size.TabIndex = 10;
 			this.numUpDown_size.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.numUpDown_size.Value = new decimal(new int[] {
@@ -185,12 +200,12 @@
 			// label_size
 			// 
 			label_size.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			label_size.Location = new System.Drawing.Point(6, 23);
+			label_size.Location = new System.Drawing.Point(10, 26);
 			label_size.Name = "label_size";
-			label_size.Size = new System.Drawing.Size(209, 18);
+			label_size.Size = new System.Drawing.Size(180, 25);
 			label_size.TabIndex = 11;
-			label_size.Text = "Размер расчётной ячейки:";
-			label_size.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			label_size.Text = "Размер ячейки:";
+			label_size.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// numUpDown_countAtoms
 			// 
@@ -200,7 +215,8 @@
             0,
             0,
             0});
-			this.numUpDown_countAtoms.Location = new System.Drawing.Point(219, 49);
+			this.numUpDown_countAtoms.Location = new System.Drawing.Point(196, 59);
+			this.numUpDown_countAtoms.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.numUpDown_countAtoms.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -212,7 +228,7 @@
             0,
             0});
 			this.numUpDown_countAtoms.Name = "numUpDown_countAtoms";
-			this.numUpDown_countAtoms.Size = new System.Drawing.Size(75, 22);
+			this.numUpDown_countAtoms.Size = new System.Drawing.Size(86, 25);
 			this.numUpDown_countAtoms.TabIndex = 6;
 			this.numUpDown_countAtoms.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.numUpDown_countAtoms.Value = new decimal(new int[] {
@@ -224,15 +240,16 @@
 			// label_countAtoms
 			// 
 			label_countAtoms.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			label_countAtoms.Location = new System.Drawing.Point(6, 51);
+			label_countAtoms.Location = new System.Drawing.Point(13, 59);
 			label_countAtoms.Name = "label_countAtoms";
-			label_countAtoms.Size = new System.Drawing.Size(209, 18);
+			label_countAtoms.Size = new System.Drawing.Size(177, 25);
 			label_countAtoms.TabIndex = 7;
 			label_countAtoms.Text = "Число атомов:";
-			label_countAtoms.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			label_countAtoms.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// groupBox_paramSimulation
 			// 
+			groupBox_paramSimulation.Controls.Add(this.checkBox_isSpapshot);
 			groupBox_paramSimulation.Controls.Add(label_dt);
 			groupBox_paramSimulation.Controls.Add(label_e);
 			groupBox_paramSimulation.Controls.Add(this.numUpDown_dt);
@@ -241,36 +258,55 @@
 			groupBox_paramSimulation.Controls.Add(this.numUpDown_snapshotStep);
 			groupBox_paramSimulation.Controls.Add(label_countStep);
 			groupBox_paramSimulation.Controls.Add(this.numUpDown_countStep);
-			groupBox_paramSimulation.Location = new System.Drawing.Point(797, 171);
+			groupBox_paramSimulation.Location = new System.Drawing.Point(701, 208);
+			groupBox_paramSimulation.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			groupBox_paramSimulation.Name = "groupBox_paramSimulation";
-			groupBox_paramSimulation.Size = new System.Drawing.Size(300, 108);
+			groupBox_paramSimulation.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			groupBox_paramSimulation.Size = new System.Drawing.Size(288, 155);
 			groupBox_paramSimulation.TabIndex = 9;
 			groupBox_paramSimulation.TabStop = false;
 			groupBox_paramSimulation.Text = "Параметры моделирования";
 			// 
+			// checkBox_isSpapshot
+			// 
+			this.checkBox_isSpapshot.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.checkBox_isSpapshot.AutoSize = true;
+			this.checkBox_isSpapshot.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.checkBox_isSpapshot.Location = new System.Drawing.Point(95, 92);
+			this.checkBox_isSpapshot.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.checkBox_isSpapshot.Name = "checkBox_isSpapshot";
+			this.checkBox_isSpapshot.Size = new System.Drawing.Size(187, 21);
+			this.checkBox_isSpapshot.TabIndex = 13;
+			this.checkBox_isSpapshot.Text = "Выводить информацию?";
+			this.checkBox_isSpapshot.UseVisualStyleBackColor = true;
+			// 
 			// label_dt
 			// 
 			label_dt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			label_dt.Location = new System.Drawing.Point(6, 23);
+			label_dt.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			label_dt.Location = new System.Drawing.Point(13, 26);
 			label_dt.Name = "label_dt";
-			label_dt.Size = new System.Drawing.Size(171, 14);
+			label_dt.Size = new System.Drawing.Size(138, 25);
 			label_dt.TabIndex = 36;
 			label_dt.Text = "Временной шаг:";
-			label_dt.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			label_dt.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// label_e
 			// 
 			label_e.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			label_e.Location = new System.Drawing.Point(229, 23);
+			label_e.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+			label_e.Location = new System.Drawing.Point(209, 26);
 			label_e.Name = "label_e";
-			label_e.Size = new System.Drawing.Size(14, 14);
+			label_e.Size = new System.Drawing.Size(16, 25);
 			label_e.TabIndex = 35;
 			label_e.Text = "e";
+			label_e.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// numUpDown_dt
 			// 
 			this.numUpDown_dt.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.numUpDown_dt.Location = new System.Drawing.Point(183, 21);
+			this.numUpDown_dt.Location = new System.Drawing.Point(157, 26);
+			this.numUpDown_dt.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.numUpDown_dt.Maximum = new decimal(new int[] {
             10,
             0,
@@ -282,7 +318,7 @@
             0,
             0});
 			this.numUpDown_dt.Name = "numUpDown_dt";
-			this.numUpDown_dt.Size = new System.Drawing.Size(40, 22);
+			this.numUpDown_dt.Size = new System.Drawing.Size(46, 25);
 			this.numUpDown_dt.TabIndex = 34;
 			this.numUpDown_dt.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.numUpDown_dt.Value = new decimal(new int[] {
@@ -294,7 +330,8 @@
 			// numUpDown_dt_e
 			// 
 			this.numUpDown_dt_e.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.numUpDown_dt_e.Location = new System.Drawing.Point(249, 21);
+			this.numUpDown_dt_e.Location = new System.Drawing.Point(231, 26);
+			this.numUpDown_dt_e.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.numUpDown_dt_e.Maximum = new decimal(new int[] {
             0,
             0,
@@ -306,7 +343,7 @@
             0,
             -2147483648});
 			this.numUpDown_dt_e.Name = "numUpDown_dt_e";
-			this.numUpDown_dt_e.Size = new System.Drawing.Size(45, 22);
+			this.numUpDown_dt_e.Size = new System.Drawing.Size(51, 25);
 			this.numUpDown_dt_e.TabIndex = 33;
 			this.numUpDown_dt_e.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.numUpDown_dt_e.Value = new decimal(new int[] {
@@ -318,17 +355,18 @@
 			// label_snapshotStep
 			// 
 			label_snapshotStep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			label_snapshotStep.Location = new System.Drawing.Point(6, 79);
+			label_snapshotStep.Location = new System.Drawing.Point(13, 121);
 			label_snapshotStep.Name = "label_snapshotStep";
-			label_snapshotStep.Size = new System.Drawing.Size(207, 14);
+			label_snapshotStep.Size = new System.Drawing.Size(177, 25);
 			label_snapshotStep.TabIndex = 32;
-			label_snapshotStep.Text = "Частота снимков системы:";
-			label_snapshotStep.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			label_snapshotStep.Text = "Шаг снимков системы:";
+			label_snapshotStep.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// numUpDown_snapshotStep
 			// 
 			this.numUpDown_snapshotStep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.numUpDown_snapshotStep.Location = new System.Drawing.Point(219, 77);
+			this.numUpDown_snapshotStep.Location = new System.Drawing.Point(196, 121);
+			this.numUpDown_snapshotStep.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.numUpDown_snapshotStep.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -340,11 +378,11 @@
             0,
             0});
 			this.numUpDown_snapshotStep.Name = "numUpDown_snapshotStep";
-			this.numUpDown_snapshotStep.Size = new System.Drawing.Size(75, 22);
+			this.numUpDown_snapshotStep.Size = new System.Drawing.Size(86, 25);
 			this.numUpDown_snapshotStep.TabIndex = 31;
 			this.numUpDown_snapshotStep.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.numUpDown_snapshotStep.Value = new decimal(new int[] {
-            1,
+            10,
             0,
             0,
             0});
@@ -352,12 +390,12 @@
 			// label_countStep
 			// 
 			label_countStep.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			label_countStep.Location = new System.Drawing.Point(6, 51);
+			label_countStep.Location = new System.Drawing.Point(13, 59);
 			label_countStep.Name = "label_countStep";
-			label_countStep.Size = new System.Drawing.Size(211, 14);
+			label_countStep.Size = new System.Drawing.Size(177, 25);
 			label_countStep.TabIndex = 30;
-			label_countStep.Text = "Количество временных шагов:";
-			label_countStep.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			label_countStep.Text = "Временных шагов:";
+			label_countStep.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// numUpDown_countStep
 			// 
@@ -367,7 +405,8 @@
             0,
             0,
             0});
-			this.numUpDown_countStep.Location = new System.Drawing.Point(219, 49);
+			this.numUpDown_countStep.Location = new System.Drawing.Point(196, 59);
+			this.numUpDown_countStep.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.numUpDown_countStep.Maximum = new decimal(new int[] {
             100000,
             0,
@@ -379,7 +418,7 @@
             0,
             0});
 			this.numUpDown_countStep.Name = "numUpDown_countStep";
-			this.numUpDown_countStep.Size = new System.Drawing.Size(75, 22);
+			this.numUpDown_countStep.Size = new System.Drawing.Size(86, 25);
 			this.numUpDown_countStep.TabIndex = 29;
 			this.numUpDown_countStep.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
 			this.numUpDown_countStep.Value = new decimal(new int[] {
@@ -393,9 +432,11 @@
 			groupBox_info.Controls.Add(this.chart_speedDistribution);
 			groupBox_info.Controls.Add(this.chart_energy);
 			groupBox_info.Controls.Add(this.richTextBox_outputWnd);
-			groupBox_info.Location = new System.Drawing.Point(12, 12);
+			groupBox_info.Location = new System.Drawing.Point(12, 13);
+			groupBox_info.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			groupBox_info.Name = "groupBox_info";
-			groupBox_info.Size = new System.Drawing.Size(779, 700);
+			groupBox_info.Padding = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			groupBox_info.Size = new System.Drawing.Size(683, 705);
 			groupBox_info.TabIndex = 11;
 			groupBox_info.TabStop = false;
 			groupBox_info.Text = "Инфографика";
@@ -404,7 +445,7 @@
 			// 
 			this.chart_speedDistribution.BorderlineColor = System.Drawing.Color.DimGray;
 			this.chart_speedDistribution.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea1.AxisX.Interval = 100D;
+			chartArea1.AxisX.Interval = 200D;
 			chartArea1.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
 			chartArea1.AxisX.Minimum = 0D;
 			chartArea1.AxisX.Title = "Скорость атомов, м/с";
@@ -425,7 +466,8 @@
 			legend1.IsTextAutoFit = false;
 			legend1.Name = "Legend1";
 			this.chart_speedDistribution.Legends.Add(legend1);
-			this.chart_speedDistribution.Location = new System.Drawing.Point(6, 252);
+			this.chart_speedDistribution.Location = new System.Drawing.Point(6, 234);
+			this.chart_speedDistribution.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.chart_speedDistribution.Name = "chart_speedDistribution";
 			series1.ChartArea = "ChartArea1";
 			series1.Color = System.Drawing.Color.Blue;
@@ -434,7 +476,7 @@
 			series1.LegendText = "Распеределение по скоростям";
 			series1.Name = "speedDistribution";
 			this.chart_speedDistribution.Series.Add(series1);
-			this.chart_speedDistribution.Size = new System.Drawing.Size(767, 225);
+			this.chart_speedDistribution.Size = new System.Drawing.Size(666, 250);
 			this.chart_speedDistribution.TabIndex = 8;
 			// 
 			// chart_energy
@@ -459,7 +501,8 @@
 			legend2.IsTextAutoFit = false;
 			legend2.Name = "Legend1";
 			this.chart_energy.Legends.Add(legend2);
-			this.chart_energy.Location = new System.Drawing.Point(6, 21);
+			this.chart_energy.Location = new System.Drawing.Point(6, 26);
+			this.chart_energy.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.chart_energy.Name = "chart_energy";
 			series2.ChartArea = "ChartArea1";
 			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
@@ -482,25 +525,27 @@
 			this.chart_energy.Series.Add(series2);
 			this.chart_energy.Series.Add(series3);
 			this.chart_energy.Series.Add(series4);
-			this.chart_energy.Size = new System.Drawing.Size(767, 225);
+			this.chart_energy.Size = new System.Drawing.Size(666, 200);
 			this.chart_energy.TabIndex = 2;
 			this.chart_energy.Text = "Графики энергий";
 			// 
 			// richTextBox_outputWnd
 			// 
-			this.richTextBox_outputWnd.Location = new System.Drawing.Point(6, 483);
+			this.richTextBox_outputWnd.Font = new System.Drawing.Font("JetBrains Mono", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.richTextBox_outputWnd.Location = new System.Drawing.Point(6, 492);
+			this.richTextBox_outputWnd.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.richTextBox_outputWnd.Name = "richTextBox_outputWnd";
-			this.richTextBox_outputWnd.Size = new System.Drawing.Size(767, 211);
+			this.richTextBox_outputWnd.Size = new System.Drawing.Size(667, 200);
 			this.richTextBox_outputWnd.TabIndex = 7;
 			this.richTextBox_outputWnd.Text = "";
 			// 
 			// button_clear
 			// 
-			this.button_clear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.button_clear.Enabled = false;
-			this.button_clear.Location = new System.Drawing.Point(641, 718);
+			this.button_clear.Location = new System.Drawing.Point(524, 726);
+			this.button_clear.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.button_clear.Name = "button_clear";
-			this.button_clear.Size = new System.Drawing.Size(150, 25);
+			this.button_clear.Size = new System.Drawing.Size(171, 25);
 			this.button_clear.TabIndex = 3;
 			this.button_clear.Text = "Очистить";
 			this.button_clear.UseVisualStyleBackColor = true;
@@ -508,11 +553,11 @@
 			// 
 			// button_stopCalculate
 			// 
-			this.button_stopCalculate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.button_stopCalculate.Enabled = false;
-			this.button_stopCalculate.Location = new System.Drawing.Point(797, 687);
+			this.button_stopCalculate.Location = new System.Drawing.Point(701, 660);
+			this.button_stopCalculate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.button_stopCalculate.Name = "button_stopCalculate";
-			this.button_stopCalculate.Size = new System.Drawing.Size(300, 25);
+			this.button_stopCalculate.Size = new System.Drawing.Size(288, 25);
 			this.button_stopCalculate.TabIndex = 4;
 			this.button_stopCalculate.Text = "Остановить";
 			this.button_stopCalculate.UseVisualStyleBackColor = true;
@@ -520,11 +565,11 @@
 			// 
 			// button_startCalculate
 			// 
-			this.button_startCalculate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.button_startCalculate.Enabled = false;
-			this.button_startCalculate.Location = new System.Drawing.Point(797, 656);
+			this.button_startCalculate.Location = new System.Drawing.Point(701, 627);
+			this.button_startCalculate.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.button_startCalculate.Name = "button_startCalculate";
-			this.button_startCalculate.Size = new System.Drawing.Size(300, 25);
+			this.button_startCalculate.Size = new System.Drawing.Size(288, 25);
 			this.button_startCalculate.TabIndex = 5;
 			this.button_startCalculate.Text = "Запуск вычисления";
 			this.button_startCalculate.UseVisualStyleBackColor = true;
@@ -532,10 +577,10 @@
 			// 
 			// button_createModel
 			// 
-			this.button_createModel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.button_createModel.Location = new System.Drawing.Point(797, 625);
+			this.button_createModel.Location = new System.Drawing.Point(701, 594);
+			this.button_createModel.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.button_createModel.Name = "button_createModel";
-			this.button_createModel.Size = new System.Drawing.Size(300, 25);
+			this.button_createModel.Size = new System.Drawing.Size(288, 25);
 			this.button_createModel.TabIndex = 6;
 			this.button_createModel.Text = "Создать модель";
 			this.button_createModel.UseVisualStyleBackColor = true;
@@ -543,11 +588,11 @@
 			// 
 			// button_visualization
 			// 
-			this.button_visualization.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.button_visualization.Enabled = false;
-			this.button_visualization.Location = new System.Drawing.Point(797, 718);
+			this.button_visualization.Location = new System.Drawing.Point(701, 693);
+			this.button_visualization.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.button_visualization.Name = "button_visualization";
-			this.button_visualization.Size = new System.Drawing.Size(300, 25);
+			this.button_visualization.Size = new System.Drawing.Size(288, 25);
 			this.button_visualization.TabIndex = 10;
 			this.button_visualization.Text = "Визуализировать";
 			this.button_visualization.UseVisualStyleBackColor = true;
@@ -555,21 +600,33 @@
 			// 
 			// progressBar_calculation
 			// 
-			this.progressBar_calculation.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.progressBar_calculation.Location = new System.Drawing.Point(12, 718);
+			this.progressBar_calculation.Location = new System.Drawing.Point(12, 725);
+			this.progressBar_calculation.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.progressBar_calculation.Name = "progressBar_calculation";
-			this.progressBar_calculation.Size = new System.Drawing.Size(623, 25);
+			this.progressBar_calculation.Size = new System.Drawing.Size(506, 25);
 			this.progressBar_calculation.Step = 1;
 			this.progressBar_calculation.TabIndex = 12;
 			// 
+			// button_distributionSpeed
+			// 
+			this.button_distributionSpeed.Enabled = false;
+			this.button_distributionSpeed.Location = new System.Drawing.Point(701, 726);
+			this.button_distributionSpeed.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.button_distributionSpeed.Name = "button_distributionSpeed";
+			this.button_distributionSpeed.Size = new System.Drawing.Size(288, 25);
+			this.button_distributionSpeed.TabIndex = 13;
+			this.button_distributionSpeed.Text = "Распределение скоростей";
+			this.button_distributionSpeed.UseVisualStyleBackColor = true;
+			this.button_distributionSpeed.Click += new System.EventHandler(this.OnClickButtonDistributionSpeed);
+			// 
 			// MainForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 17F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.BackColor = System.Drawing.SystemColors.Control;
-			this.ClientSize = new System.Drawing.Size(1105, 755);
+			this.ClientSize = new System.Drawing.Size(996, 763);
+			this.Controls.Add(this.button_distributionSpeed);
 			this.Controls.Add(this.progressBar_calculation);
 			this.Controls.Add(groupBox_info);
 			this.Controls.Add(this.button_visualization);
@@ -579,9 +636,9 @@
 			this.Controls.Add(this.button_startCalculate);
 			this.Controls.Add(this.button_stopCalculate);
 			this.Controls.Add(this.button_clear);
-			this.Font = new System.Drawing.Font("JetBrains Mono", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			this.Font = new System.Drawing.Font("JetBrains Mono", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
 			this.Location = new System.Drawing.Point(15, 15);
-			this.Margin = new System.Windows.Forms.Padding(5, 4, 5, 4);
+			this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
 			this.MaximizeBox = false;
 			this.Name = "MainForm";
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
@@ -590,6 +647,7 @@
 			((System.ComponentModel.ISupportInitialize)(this.numUpDown_size)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numUpDown_countAtoms)).EndInit();
 			groupBox_paramSimulation.ResumeLayout(false);
+			groupBox_paramSimulation.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numUpDown_dt)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numUpDown_dt_e)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.numUpDown_snapshotStep)).EndInit();
@@ -620,7 +678,8 @@
 		private System.Windows.Forms.RadioButton radioButton_orderlySystem;
 		private System.Windows.Forms.RadioButton radioButton_randomSystem;
 		private System.Windows.Forms.ProgressBar progressBar_calculation;
-
+		private System.Windows.Forms.CheckBox checkBox_isSpapshot;
+		private System.Windows.Forms.Button button_distributionSpeed;
 	}
 }
 

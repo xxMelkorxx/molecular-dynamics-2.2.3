@@ -54,7 +54,7 @@
   <ItemGroup>
     <Compile Include="AtomicStructureClass\Atom.cs" />
     <Compile Include="AtomicStructureClass\AtomicStructure.cs" />
-    <Compile Include="AtomicStructureClass\CrystalLattice.cs" />
+    <Compile Include="AtomicStructureClass\InitPlaсement.cs" />
     <Compile Include="AtomicStructureClass\Verlet.cs" />
     <Compile Include="Drawing.cs" />
     <Compile Include="MainForm.cs">

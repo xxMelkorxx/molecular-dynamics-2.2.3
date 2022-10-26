@@ -1,4 +1,6 @@
-﻿namespace molecular_dynamics_2_2_3
+﻿using System;
+
+namespace molecular_dynamics_2_2_3
 {
     public partial class AtomicStructure
     {
@@ -9,7 +11,6 @@
         {
             _ke = 0;
             _pe = 0;
-            _virial = 0;
             
             Accel();
             
@@ -24,7 +25,6 @@
         {
             _ke = 0;
             _pe = 0;
-            _virial = 0;
 
             // Вычисление новых координат.
             Atoms.ForEach(atom =>
@@ -64,19 +64,56 @@
                 {
                     var atomJ = Atoms[j];
 
-                    // Вычисление расстояния между частицами.
+                    // Расстояние между частицами.
                     var rij = Separation(atomI.Position, atomJ.Position, out var dxdy);
 
-                    var force = potential.Force(rij, dxdy);
+                    var force = _potential.Force(rij, dxdy);
                     sumForce += force;
                     atomI.Acceleration += force / atomI.Weight;
                     atomJ.Acceleration -= force / atomJ.Weight;
-                    _pe += potential.PotentialEnergy(rij);
+                    _pe += _potential.PotentialEnergy(rij);
                 }
-
-                // Для вычисления давления.
-                _virial += atomI.Position.X * sumForce.X + atomI.Position.Y * sumForce.Y;
             }
+        }
+        
+        /// <summary>
+        /// Вычисление расстояния между частицами с учётом периодических граничных условий. 
+        /// </summary>
+        /// <param name="vec1"></param>
+        /// <param name="vec2"></param>
+        /// <param name="dxdy"></param>
+        /// <returns></returns>
+        private double Separation(Vector2D vec1, Vector2D vec2, out Vector2D dxdy)
+        {
+            dxdy = vec1 - vec2;
+
+            // Обеспечивает, что расстояние между частицами никогда не будет больше L/2.
+            if (Math.Abs(dxdy.X) > 0.5 * L)
+                dxdy.X -= Math.Sign(dxdy.X) * L;
+            if (Math.Abs(dxdy.Y) > 0.5 * L)
+                dxdy.Y -= Math.Sign(dxdy.Y) * L;
+
+            return dxdy.Magnitude();
+        }
+        
+        /// <summary>
+        /// Учёт периодических граничных условий.
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        private Vector2D Periodic(Vector2D pos)
+        {
+            var newPos = Vector2D.Zero;
+
+            if (pos.X > L) newPos.X = pos.X - L;
+            else if (pos.X < 0) newPos.X = L + pos.X;
+            else newPos.X = pos.X;
+
+            if (pos.Y > L) newPos.Y = pos.Y - L;
+            else if (pos.Y < 0) newPos.Y = L + pos.Y;
+            else newPos.Y = pos.Y;
+
+            return newPos;
         }
     }
 }

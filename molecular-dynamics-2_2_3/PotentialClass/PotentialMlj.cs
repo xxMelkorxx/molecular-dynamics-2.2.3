@@ -9,11 +9,6 @@ namespace molecular_dynamics_2_2_3
         /// </summary>
         private const double eV = 0.1602176634;
 
-        /// <summary>
-        /// Постоянная Больцмана (эВ/К).
-        /// </summary>
-        private const double kB = 8.61733262e-5;
-
         public struct ParamsPotentialMlj
         {
             /// <summary>
@@ -61,7 +56,6 @@ namespace molecular_dynamics_2_2_3
         /// </summary>
         public AtomType Type
         {
-            get => _type;
             set
             {
                 _type = value;
@@ -92,7 +86,6 @@ namespace molecular_dynamics_2_2_3
         /// <returns></returns>
         public Vector2D Force(double r, Vector2D dxdy)
         {
-            //return FLD(r) * dxdy;
             return (r < Param.R1) ? FLD(r) * dxdy : (r > Param.R2) ? Vector2D.Zero : FLD(r)  * dxdy * K(r);
         }
 
@@ -103,7 +96,6 @@ namespace molecular_dynamics_2_2_3
         /// <returns></returns>
         public double PotentialEnergy(double r)
         {
-            //return PLD(r);
             return (r < Param.R1) ? PLD(r) : ((r > Param.R2) ? 0 : PLD(r) * K(r));
         }
 

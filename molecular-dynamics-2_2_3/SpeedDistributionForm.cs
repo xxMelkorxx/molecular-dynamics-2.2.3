@@ -19,12 +19,17 @@ namespace molecular_dynamics_2_2_3
 			_deltaV = maxSpeed / intervalsSpeed;
 			chart_speedDistribution.Series[0].Points.Clear();
 			chart_speedDistribution.Series[1].Points.Clear();
+			var sum = 0d;
+
 			for (var i = 0; i < speedDistribution.Length; i++)
 			{
 				var v = i * _deltaV;
 				chart_speedDistribution.Series[0].Points.AddXY(v, _speedDistribution[i]);
-				//chart_speedDistribution.Series[1].Points.AddXY(v, MaxwellDistribution(v, v0 * 1e-9));
+				sum += MaxwellDistribution(v, v0);
+				chart_speedDistribution.Series[1].Points.AddXY(v, MaxwellDistribution(v, v0));
 			}
+			textBox1.AppendText("Подсчитанная: " + _speedDistribution.Sum().ToString("F3"));
+			textBox1.AppendText(" Теоретическая: " + sum.ToString("F3"));
 		}
 
 		private void OnClickButtonSaveData(object sender, EventArgs e)

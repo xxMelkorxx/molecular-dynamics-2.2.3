@@ -28,12 +28,13 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+			System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.chart_speedDistribution = new System.Windows.Forms.DataVisualization.Charting.Chart();
 			this.button_saveData = new System.Windows.Forms.Button();
+			this.textBox1 = new System.Windows.Forms.TextBox();
 			((System.ComponentModel.ISupportInitialize)(this.chart_speedDistribution)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -41,45 +42,45 @@
 			// 
 			this.chart_speedDistribution.BorderlineColor = System.Drawing.Color.DimGray;
 			this.chart_speedDistribution.BorderlineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Solid;
-			chartArea1.AxisX.Interval = 100D;
-			chartArea1.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
-			chartArea1.AxisX.Minimum = 0D;
-			chartArea1.AxisX.Title = "Скорость атомов, м/с";
-			chartArea1.AxisX.TitleFont = new System.Drawing.Font("JetBrains Mono", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			chartArea1.AxisX2.TitleFont = new System.Drawing.Font("Cascadia Mono", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			chartArea1.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
-			chartArea1.AxisY.Minimum = 0D;
-			chartArea1.AxisY.Title = "Отн. среднее число атомов";
-			chartArea1.AxisY.TitleFont = new System.Drawing.Font("JetBrains Mono", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			chartArea1.AxisY2.TitleFont = new System.Drawing.Font("Cascadia Mono", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			chartArea1.Name = "ChartArea1";
-			this.chart_speedDistribution.ChartAreas.Add(chartArea1);
-			legend1.Alignment = System.Drawing.StringAlignment.Far;
-			legend1.BackColor = System.Drawing.Color.Transparent;
-			legend1.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.HorizontalCenter;
-			legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
-			legend1.Font = new System.Drawing.Font("JetBrains Mono", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			legend1.IsTextAutoFit = false;
-			legend1.Name = "Legend1";
-			legend1.TextWrapThreshold = 50;
-			this.chart_speedDistribution.Legends.Add(legend1);
+			chartArea2.AxisX.Interval = 100D;
+			chartArea2.AxisX.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+			chartArea2.AxisX.Minimum = 0D;
+			chartArea2.AxisX.Title = "Скорость атомов, м/с";
+			chartArea2.AxisX.TitleFont = new System.Drawing.Font("JetBrains Mono", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			chartArea2.AxisX2.TitleFont = new System.Drawing.Font("Cascadia Mono", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			chartArea2.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+			chartArea2.AxisY.Minimum = 0D;
+			chartArea2.AxisY.Title = "Отн. среднее число атомов";
+			chartArea2.AxisY.TitleFont = new System.Drawing.Font("JetBrains Mono", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			chartArea2.AxisY2.TitleFont = new System.Drawing.Font("Cascadia Mono", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			chartArea2.Name = "ChartArea1";
+			this.chart_speedDistribution.ChartAreas.Add(chartArea2);
+			legend2.Alignment = System.Drawing.StringAlignment.Far;
+			legend2.BackColor = System.Drawing.Color.Transparent;
+			legend2.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.HorizontalCenter;
+			legend2.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
+			legend2.Font = new System.Drawing.Font("JetBrains Mono", 8.999999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			legend2.IsTextAutoFit = false;
+			legend2.Name = "Legend1";
+			legend2.TextWrapThreshold = 50;
+			this.chart_speedDistribution.Legends.Add(legend2);
 			this.chart_speedDistribution.Location = new System.Drawing.Point(14, 13);
 			this.chart_speedDistribution.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
 			this.chart_speedDistribution.Name = "chart_speedDistribution";
-			series1.ChartArea = "ChartArea1";
-			series1.Color = System.Drawing.Color.Blue;
-			series1.Font = new System.Drawing.Font("JetBrains Mono", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			series1.Legend = "Legend1";
-			series1.LegendText = "Распеределение по скоростям (среднее)";
-			series1.Name = "speedDistribution";
-			series2.ChartArea = "ChartArea1";
-			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series2.Color = System.Drawing.Color.Red;
-			series2.Font = new System.Drawing.Font("JetBrains Mono", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-			series2.Legend = "Legend1";
-			series2.Name = "maxwellDistribution";
-			this.chart_speedDistribution.Series.Add(series1);
-			this.chart_speedDistribution.Series.Add(series2);
+			series3.ChartArea = "ChartArea1";
+			series3.Color = System.Drawing.Color.Blue;
+			series3.Font = new System.Drawing.Font("JetBrains Mono", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			series3.Legend = "Legend1";
+			series3.LegendText = "Распеределение по скоростям (среднее)";
+			series3.Name = "speedDistribution";
+			series4.ChartArea = "ChartArea1";
+			series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series4.Color = System.Drawing.Color.Red;
+			series4.Font = new System.Drawing.Font("JetBrains Mono", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			series4.Legend = "Legend1";
+			series4.Name = "maxwellDistribution";
+			this.chart_speedDistribution.Series.Add(series3);
+			this.chart_speedDistribution.Series.Add(series4);
 			this.chart_speedDistribution.Size = new System.Drawing.Size(897, 369);
 			this.chart_speedDistribution.TabIndex = 9;
 			this.chart_speedDistribution.Text = "Распределение по скоростям";
@@ -95,12 +96,20 @@
 			this.button_saveData.UseVisualStyleBackColor = true;
 			this.button_saveData.Click += new System.EventHandler(this.OnClickButtonSaveData);
 			// 
+			// textBox1
+			// 
+			this.textBox1.Location = new System.Drawing.Point(260, 393);
+			this.textBox1.Name = "textBox1";
+			this.textBox1.Size = new System.Drawing.Size(315, 22);
+			this.textBox1.TabIndex = 11;
+			// 
 			// SpeedDistributionForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.ClientSize = new System.Drawing.Size(925, 427);
+			this.Controls.Add(this.textBox1);
 			this.Controls.Add(this.button_saveData);
 			this.Controls.Add(this.chart_speedDistribution);
 			this.Font = new System.Drawing.Font("JetBrains Mono", 8.249999F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -110,6 +119,7 @@
 			this.Text = "Распределение по скоростям (среднее)";
 			((System.ComponentModel.ISupportInitialize)(this.chart_speedDistribution)).EndInit();
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
@@ -117,5 +127,6 @@
 
 		private System.Windows.Forms.DataVisualization.Charting.Chart chart_speedDistribution;
 		private System.Windows.Forms.Button button_saveData;
+		private System.Windows.Forms.TextBox textBox1;
 	}
 }

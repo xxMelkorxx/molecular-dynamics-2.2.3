@@ -11,13 +11,13 @@ namespace molecular_dynamics_2_2_3
         /// <summary>
         /// Список атомов расчётной ячейки.
         /// </summary>
-        public List<Atom> Atoms { get; set; }
+        public List<Atom> Atoms { get; }
 
         // Параметры системы.
         /// <summary>
         /// Размер расчётной ячейки.
         /// </summary>
-        public int Size { get; set; }
+        public int Size { get; }
 
         /// <summary>
         /// Параметр решётки (нм).
@@ -58,18 +58,6 @@ namespace molecular_dynamics_2_2_3
         /// Температура системы.
         /// </summary>
         public double Temperature => 2.0 / 3.0 * KinEnergy / (kB / eV * CountAtoms);
-
-        /// <summary>
-        /// Давление системы.
-        /// </summary>
-        public double Press => (KinEnergy + 0.5 * _virial / CountAtoms) / Volume * 1e4;
-
-        private double _virial;
-
-        /// <summary>
-        /// Объём системы.
-        /// </summary>
-        public double Volume => L * L;
 
         /// <summary>
         /// Тип атомов.
@@ -123,7 +111,7 @@ namespace molecular_dynamics_2_2_3
         /// <summary>
         /// Класс потенциала.
         /// </summary>
-        public readonly PotentialMlj potential;
+        private readonly PotentialMlj _potential;
 
         /// <summary>
         /// Список текущего положения атомов.
@@ -148,7 +136,7 @@ namespace molecular_dynamics_2_2_3
         public AtomicStructure(int size, AtomType atomType = AtomType.Ar)
         {
             _rnd = new Random(DateTime.Now.Millisecond);
-            potential = new PotentialMlj(atomType);
+            _potential = new PotentialMlj(atomType);
             Atoms = new List<Atom>();
 
             Size = size;
@@ -168,7 +156,7 @@ namespace molecular_dynamics_2_2_3
         public AtomicStructure(int size, int countAtoms, AtomType atomType = AtomType.Ar)
         {
             _rnd = new Random(DateTime.Now.Millisecond);
-            potential = new PotentialMlj(atomType);
+            _potential = new PotentialMlj(atomType);
             Atoms = new List<Atom>();
 
             Size = size;
@@ -213,66 +201,6 @@ namespace molecular_dynamics_2_2_3
         }
 
         /// <summary>
-        /// Вычисление расстояния между частицами с учётом периодических граничных условий. 
-        /// </summary>
-        /// <param name="vec1"></param>
-        /// <param name="vec2"></param>
-        /// <param name="dxdy"></param>
-        /// <returns></returns>
-        private double Separation(Vector2D vec1, Vector2D vec2, out Vector2D dxdy)
-        {
-            dxdy = vec1 - vec2;
-
-            // Обеспечивает, что расстояние между частицами никогда не будет больше L/2.
-            if (Math.Abs(dxdy.X) > 0.5 * L)
-                dxdy.X -= Math.Sign(dxdy.X) * L;
-            if (Math.Abs(dxdy.Y) > 0.5 * L)
-                dxdy.Y -= Math.Sign(dxdy.Y) * L;
-
-            return dxdy.Magnitude();
-        }
-
-        /// <summary>
-        /// Вычисление квадрата расстояния между частицами с учётом периодических граничных условий. 
-        /// </summary>
-        /// <param name="vec1"></param>
-        /// <param name="vec2"></param>
-        /// <param name="dxdy"></param>
-        /// <returns></returns>
-        private double SeparationSqured(Vector2D vec1, Vector2D vec2, out Vector2D dxdy)
-        {
-            dxdy = vec1 - vec2;
-
-            // Обеспечивает, что расстояние между частицами никогда не будет больше L/2.
-            if (Math.Abs(dxdy.X) > 0.5 * L)
-                dxdy.X -= Math.Sign(dxdy.X) * L;
-            if (Math.Abs(dxdy.Y) > 0.5 * L)
-                dxdy.Y -= Math.Sign(dxdy.Y) * L;
-
-            return dxdy.SquaredMagnitude();
-        }
-
-        /// <summary>
-        /// Учёт периодических граничных условий.
-        /// </summary>
-        /// <param name="pos"></param>
-        /// <returns></returns>
-        private Vector2D Periodic(Vector2D pos)
-        {
-            var newPos = Vector2D.Zero;
-
-            if (pos.X > L) newPos.X = pos.X - L;
-            else if (pos.X < 0) newPos.X = L + pos.X;
-            else newPos.X = pos.X;
-
-            if (pos.Y > L) newPos.Y = pos.Y - L;
-            else if (pos.Y < 0) newPos.Y = L + pos.Y;
-            else newPos.Y = pos.Y;
-
-            return newPos;
-        }
-
-        /// <summary>
         /// Начальная перенормировка скоростей.
         /// </summary>
         /// <param name="T"></param>
@@ -306,10 +234,14 @@ namespace molecular_dynamics_2_2_3
             var atomsVelocities = new List<double>();
             Atoms.ForEach(atom => atomsVelocities.Add(atom.Velocity.Magnitude() * 1e-9));
 
-            var deltaSpeed = 2.0 * maxSpeed / intervals;
+            var deltaSpeed = maxSpeed / intervals;
 
             var speedDistribution = new double[intervals];
-            atomsVelocities.ForEach(vel => speedDistribution[(int)(vel / deltaSpeed)] += 1.0 / CountAtoms );
+            atomsVelocities.ForEach(vel =>
+            {
+                var interval = (int)(vel / deltaSpeed);
+                speedDistribution[interval >= speedDistribution.Length ? speedDistribution.Length - 1 : interval] += 1.0 / CountAtoms;
+            });
 
             return speedDistribution;
         }

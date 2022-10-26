@@ -7,32 +7,21 @@ namespace molecular_dynamics_2_2_3
 {
 	public class Drawing
 	{
-		private PictureBox _pictureBox;
 		private Graphics _graphics;
-		private Bitmap _bitmap;
 		private readonly double _alpha, _beta;
 
 		public Drawing(PictureBox pB, double x1, double y1, double x2, double y2)
 		{
-			_pictureBox = pB;
-			_bitmap = new Bitmap(_pictureBox.Width, _pictureBox.Height);
-			_graphics = Graphics.FromImage(_bitmap);
+			var bitmap = new Bitmap(pB.Width, pB.Height);
+			_graphics = Graphics.FromImage(bitmap);
 			_graphics.SmoothingMode = SmoothingMode.AntiAlias;
-			_graphics.TranslateTransform(0, _pictureBox.Height);
+			_graphics.TranslateTransform(0, pB.Height);
 			
 			// Вычисление коэффициентов преобразование.
-			_alpha = _pictureBox.Width / (x2 - x1);
-			_beta = -_pictureBox.Height / (y2 - y1);
+			_alpha = pB.Width / (x2 - x1);
+			_beta = -pB.Height / (y2 - y1);
 
-			_pictureBox.Image = _bitmap;
-		}
-
-		/// <summary>
-		/// Очищает область.
-		/// </summary>
-		public void Clear()
-		{
-			_graphics.Clear(Color.White);
+			pB.Image = bitmap;
 		}
 
 		/// <summary>
