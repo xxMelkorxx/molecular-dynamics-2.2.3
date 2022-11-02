@@ -239,11 +239,38 @@ namespace molecular_dynamics_2_2_3
             var speedDistribution = new double[intervals];
             atomsVelocities.ForEach(vel =>
             {
-                var interval = (int)(vel / deltaSpeed);
-                speedDistribution[interval >= speedDistribution.Length ? speedDistribution.Length - 1 : interval] += 1.0 / CountAtoms;
+                var i = (int)(vel / deltaSpeed);
+                speedDistribution[i >= speedDistribution.Length ? speedDistribution.Length - 1 : i] += 1.0 / CountAtoms;
             });
 
             return speedDistribution;
+        }
+
+        /// <summary>
+        /// Рассчёт среднего распределения по скоростям.
+        /// </summary>
+        /// <param name="speedDistributionList"></param>
+        /// <returns></returns>
+        public static double[] AverageSpeedDistribution(List<double[]> speedDistributionList)
+        {
+            var length = speedDistributionList[0].Length;
+            var result = new double[length];
+
+            for (var i = 0; i < length; i++)
+            {
+                var average = 0.0;
+                for (var j = 0; j < speedDistributionList.Count; j++)
+                    average += speedDistributionList[j][i];
+
+                result[i] = average / speedDistributionList.Count;
+            }
+
+            return result;
+        }
+
+        public static double MaxwellDistribution(double v, double v0, double dV)
+        {
+            return 2 * v * dV / (v0 * v0) * Math.Exp(-(v * v) / (v0 * v0));
         }
     }
 }

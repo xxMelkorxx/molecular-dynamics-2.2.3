@@ -41,11 +41,12 @@
 			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
 			System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
 			System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-			System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+			System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
 			this.radioButton_randomSystem = new System.Windows.Forms.RadioButton();
 			this.radioButton_orderlySystem = new System.Windows.Forms.RadioButton();
 			this.numUpDown_temp = new System.Windows.Forms.NumericUpDown();
@@ -65,7 +66,7 @@
 			this.button_createModel = new System.Windows.Forms.Button();
 			this.button_visualization = new System.Windows.Forms.Button();
 			this.progressBar_calculation = new System.Windows.Forms.ProgressBar();
-			this.button_distributionSpeed = new System.Windows.Forms.Button();
+			this.button_saveDistributionSpeed = new System.Windows.Forms.Button();
 			groupBox_paramSystem = new System.Windows.Forms.GroupBox();
 			label_temp = new System.Windows.Forms.Label();
 			label_size = new System.Windows.Forms.Label();
@@ -475,7 +476,16 @@
 			series1.Legend = "Legend1";
 			series1.LegendText = "Распеределение по скоростям";
 			series1.Name = "speedDistribution";
+			series2.ChartArea = "ChartArea1";
+			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series2.Color = System.Drawing.Color.Red;
+			series2.Font = new System.Drawing.Font("JetBrains Mono", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+			series2.Legend = "Legend1";
+			series2.LegendText = "Распеределение Максвелла";
+			series2.Name = "maxwellDistribution";
+			series2.IsVisibleInLegend = false;
 			this.chart_speedDistribution.Series.Add(series1);
+			this.chart_speedDistribution.Series.Add(series2);
 			this.chart_speedDistribution.Size = new System.Drawing.Size(666, 250);
 			this.chart_speedDistribution.TabIndex = 8;
 			// 
@@ -504,27 +514,27 @@
 			this.chart_energy.Location = new System.Drawing.Point(6, 26);
 			this.chart_energy.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.chart_energy.Name = "chart_energy";
-			series2.ChartArea = "ChartArea1";
-			series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series2.Color = System.Drawing.Color.Red;
-			series2.Legend = "Legend1";
-			series2.LegendText = "Кинетическая энергия";
-			series2.Name = "ke";
 			series3.ChartArea = "ChartArea1";
 			series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series3.Color = System.Drawing.Color.Blue;
+			series3.Color = System.Drawing.Color.Red;
 			series3.Legend = "Legend1";
-			series3.LegendText = "Потенциальная энергия";
-			series3.Name = "pe";
+			series3.LegendText = "Кинетическая энергия";
+			series3.Name = "ke";
 			series4.ChartArea = "ChartArea1";
 			series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-			series4.Color = System.Drawing.Color.Green;
+			series4.Color = System.Drawing.Color.Blue;
 			series4.Legend = "Legend1";
-			series4.LegendText = "Полная энергия";
-			series4.Name = "fe";
-			this.chart_energy.Series.Add(series2);
+			series4.LegendText = "Потенциальная энергия";
+			series4.Name = "pe";
+			series5.ChartArea = "ChartArea1";
+			series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+			series5.Color = System.Drawing.Color.Green;
+			series5.Legend = "Legend1";
+			series5.LegendText = "Полная энергия";
+			series5.Name = "fe";
 			this.chart_energy.Series.Add(series3);
 			this.chart_energy.Series.Add(series4);
+			this.chart_energy.Series.Add(series5);
 			this.chart_energy.Size = new System.Drawing.Size(666, 200);
 			this.chart_energy.TabIndex = 2;
 			this.chart_energy.Text = "Графики энергий";
@@ -607,17 +617,17 @@
 			this.progressBar_calculation.Step = 1;
 			this.progressBar_calculation.TabIndex = 12;
 			// 
-			// button_distributionSpeed
+			// button_saveDistributionSpeed
 			// 
-			this.button_distributionSpeed.Enabled = false;
-			this.button_distributionSpeed.Location = new System.Drawing.Point(701, 726);
-			this.button_distributionSpeed.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-			this.button_distributionSpeed.Name = "button_distributionSpeed";
-			this.button_distributionSpeed.Size = new System.Drawing.Size(288, 25);
-			this.button_distributionSpeed.TabIndex = 13;
-			this.button_distributionSpeed.Text = "Распределение скоростей";
-			this.button_distributionSpeed.UseVisualStyleBackColor = true;
-			this.button_distributionSpeed.Click += new System.EventHandler(this.OnClickButtonDistributionSpeed);
+			this.button_saveDistributionSpeed.Enabled = false;
+			this.button_saveDistributionSpeed.Location = new System.Drawing.Point(701, 726);
+			this.button_saveDistributionSpeed.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+			this.button_saveDistributionSpeed.Name = "button_saveDistributionSpeed";
+			this.button_saveDistributionSpeed.Size = new System.Drawing.Size(288, 25);
+			this.button_saveDistributionSpeed.TabIndex = 13;
+			this.button_saveDistributionSpeed.Text = "Сохранить распределение в файл";
+			this.button_saveDistributionSpeed.UseVisualStyleBackColor = true;
+			this.button_saveDistributionSpeed.Click += new System.EventHandler(this.OnClickButtonSaveDistributionSpeed);
 			// 
 			// MainForm
 			// 
@@ -626,7 +636,7 @@
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.BackColor = System.Drawing.SystemColors.Control;
 			this.ClientSize = new System.Drawing.Size(996, 763);
-			this.Controls.Add(this.button_distributionSpeed);
+			this.Controls.Add(this.button_saveDistributionSpeed);
 			this.Controls.Add(this.progressBar_calculation);
 			this.Controls.Add(groupBox_info);
 			this.Controls.Add(this.button_visualization);
@@ -679,7 +689,7 @@
 		private System.Windows.Forms.RadioButton radioButton_randomSystem;
 		private System.Windows.Forms.ProgressBar progressBar_calculation;
 		private System.Windows.Forms.CheckBox checkBox_isSpapshot;
-		private System.Windows.Forms.Button button_distributionSpeed;
+		private System.Windows.Forms.Button button_saveDistributionSpeed;
 	}
 }
 

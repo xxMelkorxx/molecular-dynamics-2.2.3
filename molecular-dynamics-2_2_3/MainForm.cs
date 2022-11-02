@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,7 +15,9 @@ namespace molecular_dynamics_2_2_3
         private Thread _thread;
         private List<List<Vector2D>> _atomsPosition;
         private List<double[]> _speedDistributionList;
+        private double[] _averageSpeedDistribution;
         private double _maxSpeed;
+        private double _dV;
         private int _iter;
 
         private const int IntervalsSpeed = 50;
@@ -39,6 +43,9 @@ namespace molecular_dynamics_2_2_3
             chart_energy.Series[0].Points.Clear();
             chart_energy.Series[1].Points.Clear();
             chart_energy.Series[2].Points.Clear();
+            chart_speedDistribution.Series[0].Points.Clear();
+            chart_speedDistribution.Series[1].Points.Clear();
+            chart_speedDistribution.Series[1].IsVisibleInLegend = false;
 
             button_stopCalculate.Text = "Остановить";
             button_createModel.Enabled = false;
@@ -81,7 +88,10 @@ namespace molecular_dynamics_2_2_3
                 Application.DoEvents();
 
             _iter = 1;
-            _maxSpeed = 2.5 * _atomic.Atoms.Max(atom => atom.Velocity.Magnitude()) * 1e-9;
+            _maxSpeed = 3 * _atomic.Atoms.Max(atom => atom.Velocity.Magnitude()) * 1e-9;
+            _maxSpeed -= _maxSpeed % 100;
+            _dV = _maxSpeed / IntervalsSpeed;
+            chart_speedDistribution.ChartAreas[0].AxisX.Interval = _dV * 5;
             _speedDistributionList = new List<double[]>();
             _speedDistributionList.Add(_atomic.GetSpeedDistribution(_maxSpeed));
             _atomsPosition = new List<List<Vector2D>>();
@@ -93,7 +103,7 @@ namespace molecular_dynamics_2_2_3
             button_createModel.Enabled = true;
             button_startCalculate.Enabled = true;
             button_clear.Enabled = true;
-            button_distributionSpeed.Enabled = false;
+            button_saveDistributionSpeed.Enabled = false;
 
             AlarmBeep(800, 600, 1);
         }
@@ -130,7 +140,7 @@ namespace molecular_dynamics_2_2_3
             button_stopCalculate.Enabled = true;
             button_visualization.Enabled = false;
             button_clear.Enabled = true;
-            button_distributionSpeed.Enabled = false;
+            button_saveDistributionSpeed.Enabled = false;
 
             progressBar_calculation.Value = 0;
             progressBar_calculation.Maximum = countStep;
@@ -205,12 +215,15 @@ namespace molecular_dynamics_2_2_3
 
                     _iter += countStep;
 
+                    _averageSpeedDistribution = AtomicStructure.AverageSpeedDistribution(_speedDistributionList);
+                    ShowSpeedDistribution();
+
                     #region -------FormElements-------
 
                     button_startCalculate.Enabled = true;
                     button_stopCalculate.Enabled = false;
                     button_visualization.Enabled = true;
-                    button_distributionSpeed.Enabled = true;
+                    button_saveDistributionSpeed.Enabled = true;
 
                     #endregion
                 }, null);
@@ -263,11 +276,22 @@ namespace molecular_dynamics_2_2_3
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void OnClickButtonDistributionSpeed(object sender, EventArgs e)
+        private void OnClickButtonSaveDistributionSpeed(object sender, EventArgs e)
         {
-            var speedDistributionForm = new SpeedDistributionForm(
-                AverageSpeedDistribution(_speedDistributionList), _maxSpeed, IntervalsSpeed, _atomic.Vsqrt * 1e-9);
-            speedDistributionForm.Show();
+            var saveDialog = new SaveFileDialog
+            {
+                Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*",
+                RestoreDirectory = true
+            };
+            if (saveDialog.ShowDialog() == DialogResult.OK)
+            {
+                var data = string.Empty;
+                for (var i = 0; i < _averageSpeedDistribution.Length; i++)
+                    data += string.Format("{0} {1}\n", i * _dV, _averageSpeedDistribution[i]);
+
+                using (var sw = new StreamWriter(saveDialog.OpenFile(), Encoding.Default))
+                    sw.Write(data);
+            }
         }
 
         /// <summary>
@@ -278,6 +302,23 @@ namespace molecular_dynamics_2_2_3
         private void OnClearRichBoxInfo(object sender, EventArgs e)
         {
             richTextBox_outputWnd.Clear();
+        }
+
+        /// <summary>
+        /// Отображает среднее распределение по скоростям и теоретическое.
+        /// </summary>
+        private void ShowSpeedDistribution()
+        {
+            chart_speedDistribution.Series[0].Points.Clear();
+            chart_speedDistribution.Series[1].Points.Clear();
+            chart_speedDistribution.Series[1].IsVisibleInLegend = true;
+            for (var i = 0; i < _averageSpeedDistribution.Length; i++)
+            {
+                var v = i * _dV;
+                chart_speedDistribution.Series[0].Points.AddXY(v, _averageSpeedDistribution[i]);
+                chart_speedDistribution.Series[1].Points
+                    .AddXY(v, AtomicStructure.MaxwellDistribution(v, _atomic.Vsqrt * 1e-9, _dV));
+            }
         }
 
         /// <summary>
@@ -340,28 +381,6 @@ namespace molecular_dynamics_2_2_3
         {
             for (var i = 0; i < count; i++)
                 Console.Beep(freq, duration);
-        }
-
-        /// <summary>
-        /// Рассчёт среднего распределения по скоростям.
-        /// </summary>
-        /// <param name="speedDistributionList"></param>
-        /// <returns></returns>
-        private static double[] AverageSpeedDistribution(List<double[]> speedDistributionList)
-        {
-            var length = speedDistributionList[0].Length;
-            var result = new double[length];
-
-            for (var i = 0; i < length; i++)
-            {
-                var average = 0.0;
-                for (var j = 0; j < speedDistributionList.Count; j++)
-                    average += speedDistributionList[j][i];
-
-                result[i] = average / speedDistributionList.Count;
-            }
-
-            return result;
         }
     }
 }
