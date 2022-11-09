@@ -17,10 +17,10 @@ namespace molecular_dynamics_2_2_3
         private List<double[]> _speedDistributionList;
         private double[] _averageSpeedDistribution;
         private double _maxSpeed;
-        private double _dV;
+        private int _countdV;
         private int _iter;
 
-        private const int IntervalsSpeed = 50;
+        private const double DeltaV = 25;
 
         public MainForm()
         {
@@ -88,12 +88,13 @@ namespace molecular_dynamics_2_2_3
                 Application.DoEvents();
 
             _iter = 1;
+
             _maxSpeed = 3 * _atomic.Atoms.Max(atom => atom.Velocity.Magnitude()) * 1e-9;
-            _maxSpeed -= _maxSpeed % 100;
-            _dV = _maxSpeed / IntervalsSpeed;
-            chart_speedDistribution.ChartAreas[0].AxisX.Interval = _dV * 5;
+            _countdV = (int)(_maxSpeed / DeltaV);
+			chart_speedDistribution.ChartAreas[0].AxisX.Interval = 4 * DeltaV;
+
             _speedDistributionList = new List<double[]>();
-            _speedDistributionList.Add(_atomic.GetSpeedDistribution(_maxSpeed));
+            _speedDistributionList.Add(_atomic.GetSpeedDistribution(_maxSpeed, _countdV));
             _atomsPosition = new List<List<Vector2D>>();
             _atomsPosition.Add(_atomic.AtomsPositions);
 
@@ -173,7 +174,7 @@ namespace molecular_dynamics_2_2_3
                     fe.Add(_atomic.FullEnergy);
 
                     _atomsPosition.Add(_atomic.AtomsPositions);
-                    _speedDistributionList.Add(_atomic.GetSpeedDistribution(_maxSpeed));
+                    _speedDistributionList.Add(_atomic.GetSpeedDistribution(_maxSpeed, _countdV));
 
                     var idx = i;
                     sync.Send(__ =>
@@ -185,7 +186,7 @@ namespace molecular_dynamics_2_2_3
                             // Построение графика распределения скоростей.
                             chart_speedDistribution.Series[0].Points.Clear();
                             for (var j = 0; j < _speedDistributionList[idx - _iter].Length; j++)
-                                chart_speedDistribution.Series[0].Points.AddXY(j * (_maxSpeed / IntervalsSpeed),
+                                chart_speedDistribution.Series[0].Points.AddXY(j * DeltaV,
                                     _speedDistributionList[idx - _iter][j]);
 
                             // Вывод данных в RichTextBox.
@@ -287,7 +288,7 @@ namespace molecular_dynamics_2_2_3
             {
                 var data = string.Empty;
                 for (var i = 0; i < _averageSpeedDistribution.Length; i++)
-                    data += string.Format("{0} {1}\n", i * _dV, _averageSpeedDistribution[i]);
+                    data += string.Format("{0} {1}\n", i * _countdV, _averageSpeedDistribution[i]);
 
                 using (var sw = new StreamWriter(saveDialog.OpenFile(), Encoding.Default))
                     sw.Write(data);
@@ -314,10 +315,10 @@ namespace molecular_dynamics_2_2_3
             chart_speedDistribution.Series[1].IsVisibleInLegend = true;
             for (var i = 0; i < _averageSpeedDistribution.Length; i++)
             {
-                var v = i * _dV;
+                var v = i * DeltaV;
                 chart_speedDistribution.Series[0].Points.AddXY(v, _averageSpeedDistribution[i]);
                 chart_speedDistribution.Series[1].Points
-                    .AddXY(v, AtomicStructure.MaxwellDistribution(v, _atomic.Vsqrt * 1e-9, _dV));
+                    .AddXY(v, AtomicStructure.MaxwellDistribution(v, _atomic.Vsqrt * 1e-9, DeltaV));
             }
         }
 

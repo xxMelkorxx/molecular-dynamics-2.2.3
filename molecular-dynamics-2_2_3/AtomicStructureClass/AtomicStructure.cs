@@ -194,8 +194,7 @@ namespace molecular_dynamics_2_2_3
         {
             Atoms.ForEach(atom =>
             {
-                var displacement = (-1 * Vector2D.One + 2 * new Vector2D(_rnd.NextDouble(), _rnd.NextDouble())) * k *
-                                   ParamLat;
+                var displacement = (-1 * Vector2D.One + 2 * new Vector2D(_rnd.NextDouble(), _rnd.NextDouble())) * k * ParamLat;
                 atom.Position = Periodic(atom.Position + displacement);
             });
         }
@@ -207,10 +206,10 @@ namespace molecular_dynamics_2_2_3
         public void InitVelocityNormalization(double T)
         {
             Vsqrt = Math.Sqrt(2 * kB * T / Atoms[0].Weight);
-            const double pi2 = 2 * Math.PI;
-            Atoms.ForEach(atom =>
-                atom.Velocity = new Vector2D(Math.Sin(pi2 * _rnd.NextDouble()), Math.Cos(pi2 * _rnd.NextDouble())) *
-                                Vsqrt);
+            Atoms.ForEach(atom => {
+                var r = 2 * Math.PI * _rnd.NextDouble();
+                atom.Velocity = new Vector2D(Math.Sin(r), Math.Cos(r)) * Vsqrt;
+			});
         }
 
         /// <summary>
@@ -229,7 +228,7 @@ namespace molecular_dynamics_2_2_3
         /// <param name="maxSpeed"></param>
         /// <param name="intervals"></param>
         /// <returns></returns>
-        public double[] GetSpeedDistribution(double maxSpeed, int intervals = 50)
+        public double[] GetSpeedDistribution(double maxSpeed, int intervals)
         {
             var atomsVelocities = new List<double>();
             Atoms.ForEach(atom => atomsVelocities.Add(atom.Velocity.Magnitude() * 1e-9));
