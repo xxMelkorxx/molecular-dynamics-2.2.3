@@ -57,7 +57,7 @@ namespace molecular_dynamics_2_2_3
         /// <summary>
         /// Температура системы.
         /// </summary>
-        public double Temperature => 2.0 / 3.0 * KinEnergy / (kB / eV * CountAtoms);
+        public double Temperature => KinEnergy / (kB / eV * CountAtoms);
 
         /// <summary>
         /// Тип атомов.
@@ -82,17 +82,33 @@ namespace molecular_dynamics_2_2_3
 
         private AtomType _atomType;
 
-        #endregion
+		/// <summary>
+		/// Список текущего положения атомов.
+		/// </summary>
+		public List<Vector2D> AtomsPositions
+		{
+			get
+			{
+				_atomsPositions = new List<Vector2D>();
+				Atoms.ForEach(atom => _atomsPositions.Add(atom.Position));
+				return _atomsPositions;
+			}
+		}
 
-        public double Vsqrt;
+		private List<Vector2D> _atomsPositions;
 
-        // Параметры симуляции.
+		#endregion
+
+        /// <summary>
+        /// Среднеквадратичная скорость.
+        /// </summary>
+		public double Vsqrt;
+
         /// <summary>
         /// Величина временного шага.
         /// </summary>
         public double dt;
 
-        // Константы.
         /// <summary>
         /// 1 эВ в Дж с нм.
         /// </summary>
@@ -112,21 +128,6 @@ namespace molecular_dynamics_2_2_3
         /// Класс потенциала.
         /// </summary>
         private readonly PotentialMlj _potential;
-
-        /// <summary>
-        /// Список текущего положения атомов.
-        /// </summary>
-        public List<Vector2D> AtomsPositions
-        {
-            get
-            {
-                _atomsPositions = new List<Vector2D>();
-                Atoms.ForEach(atom => _atomsPositions.Add(atom.Position));
-                return _atomsPositions;
-            }
-        }
-
-        private List<Vector2D> _atomsPositions;
 
         /// <summary>
         /// Инициализация и создание упорядоченной атомной структуры.
@@ -218,7 +219,7 @@ namespace molecular_dynamics_2_2_3
         public void VelocityNormalization(double T)
         {
             var sum = Atoms.Sum(atom => atom.Weight * atom.Velocity.SquaredMagnitude());
-            var beta = Math.Sqrt(3 * CountAtoms * kB * T / sum);
+            var beta = Math.Sqrt(2 * CountAtoms * kB * T / sum);
             Atoms.ForEach(atom => atom.Velocity *= beta);
         }
 
@@ -228,10 +229,11 @@ namespace molecular_dynamics_2_2_3
         /// <param name="maxSpeed"></param>
         /// <param name="intervals"></param>
         /// <returns></returns>
-        public double[] GetSpeedDistribution(double maxSpeed, int intervals)
+        public double[] GetSpeedDistribution(double maxSpeed, int intervals, out double averageSpeed)
         {
             var atomsVelocities = new List<double>();
             Atoms.ForEach(atom => atomsVelocities.Add(atom.Velocity.Magnitude() * 1e-9));
+            averageSpeed = atomsVelocities.Average();
 
             var deltaSpeed = maxSpeed / intervals;
 
@@ -264,7 +266,7 @@ namespace molecular_dynamics_2_2_3
                 result[i] = average / speedDistributionList.Count;
             }
 
-            return result;
+			return result;
         }
 
         public static double MaxwellDistribution(double v, double v0, double dV)
