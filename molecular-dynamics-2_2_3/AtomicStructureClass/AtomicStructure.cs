@@ -229,11 +229,10 @@ namespace molecular_dynamics_2_2_3
         /// <param name="maxSpeed"></param>
         /// <param name="intervals"></param>
         /// <returns></returns>
-        public double[] GetSpeedDistribution(double maxSpeed, int intervals, out double averageSpeed)
+        public double[] GetSpeedDistribution(double maxSpeed, int intervals)
         {
             var atomsVelocities = new List<double>();
             Atoms.ForEach(atom => atomsVelocities.Add(atom.Velocity.Magnitude() * 1e-9));
-            averageSpeed = atomsVelocities.Average();
 
             var deltaSpeed = maxSpeed / intervals;
 

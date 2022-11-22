@@ -15,7 +15,6 @@ namespace molecular_dynamics_2_2_3
         private Thread _thread;
         private List<List<Vector2D>> _atomsPosition;
         private List<double[]> _speedDistributionList;
-		private List<double> _averageSpeedList;
 		private double[] _averageSpeedDistribution;
         private double _maxSpeed;
         private int _countdV;
@@ -95,17 +94,18 @@ namespace molecular_dynamics_2_2_3
                 Application.DoEvents();
 
             _iter = 1;
-
             _maxSpeed = 3 * _atomic.Atoms.Max(atom => atom.Velocity.Magnitude()) * 1e-9;
             _countdV = (int)(_maxSpeed / DeltaV);
 			chart_speedDistribution.ChartAreas[0].AxisX.Interval = 4 * DeltaV;
 
+            // Инициализация Lists.
             _speedDistributionList = new List<double[]>();
-            _averageSpeedList = new List<double>();
-            _speedDistributionList.Add(_atomic.GetSpeedDistribution(_maxSpeed, _countdV, out var averageSpeed));
             _atomsPosition = new List<List<Vector2D>>();
+            GC.Collect();
+            
+            // Начальное запоминание.
+            _speedDistributionList.Add(_atomic.GetSpeedDistribution(_maxSpeed, _countdV));
             _atomsPosition.Add(_atomic.AtomsPositions);
-            _averageSpeedList.Add(averageSpeed);
 
             // Вывод начальной информации.
             richTextBox_outputWnd.AppendText(InitInfoSystem());
@@ -183,8 +183,7 @@ namespace molecular_dynamics_2_2_3
                     fe.Add(_atomic.FullEnergy);
 
                     _atomsPosition.Add(_atomic.AtomsPositions);
-                    _speedDistributionList.Add(_atomic.GetSpeedDistribution(_maxSpeed, _countdV, out var averageSpeed));
-                    _averageSpeedList.Add(averageSpeed);
+                    _speedDistributionList.Add(_atomic.GetSpeedDistribution(_maxSpeed, _countdV));
 
                     var idx = i;
                     sync.Send(__ =>
@@ -334,24 +333,32 @@ namespace molecular_dynamics_2_2_3
             chart_speedDistribution.Series[3].IsVisibleInLegend = true;
             chart_speedDistribution.Series[4].IsVisibleInLegend = true;
 
-			var averageSpeed = _averageSpeedList.Average();
-			var mostLikelySpeed = 0d;
+			var averageSpeed = 0d;
+            var max = double.MinValue;
+            var idxMax = 0;
             for (var i = 0; i < _averageSpeedDistribution.Length; i++)
             {
                 var v = i * DeltaV;
-                mostLikelySpeed += v * _averageSpeedDistribution[i];
+                
+                if (_averageSpeedDistribution[i] > max)
+                {
+                    max = _averageSpeedDistribution[i];
+                    idxMax = i;
+                }
+                
+                averageSpeed += v * _averageSpeedDistribution[i];
                 chart_speedDistribution.Series[0].Points.AddXY(v, _averageSpeedDistribution[i]);
-                chart_speedDistribution.Series[1].Points
-                    .AddXY(v, AtomicStructure.MaxwellDistribution(v, _atomic.Vsqrt * 1e-9, DeltaV));
+                chart_speedDistribution.Series[1].Points.AddXY(v, AtomicStructure.MaxwellDistribution(v, _atomic.Vsqrt * 1e-9, DeltaV));
             }
+            var mostLikelySpeed = (idxMax + 0.5) * DeltaV;
 
             chart_speedDistribution.Series[2].Points.AddXY(mostLikelySpeed, _averageSpeedDistribution.Max());
 			chart_speedDistribution.Series[3].Points.AddXY(averageSpeed, _averageSpeedDistribution.Max());
 			chart_speedDistribution.Series[4].Points.AddXY(_atomic.Vsqrt * 1e-9, _averageSpeedDistribution.Max());
 
-            richTextBox_outputWnd.AppendText("\nСреднеквадратичная скорость: " + (_atomic.Vsqrt * 1e-9).ToString("F3") + " м/с");
             richTextBox_outputWnd.AppendText("\nНаиболее вероятная скорость: " + mostLikelySpeed.ToString("F3") + " м/с");
             richTextBox_outputWnd.AppendText("\nСредняя скорость: " + averageSpeed.ToString("F3") + " м/с");
+            richTextBox_outputWnd.AppendText("\nСреднеквадратичная скорость: " + (_atomic.Vsqrt * 1e-9).ToString("F3") + " м/с");
 			richTextBox_outputWnd.SelectionStart = richTextBox_outputWnd.Text.Length;
 			richTextBox_outputWnd.ScrollToCaret();
 		}
@@ -371,7 +378,7 @@ namespace molecular_dynamics_2_2_3
             text += string.Format("Кинетическая энергия - {0} эВ\n", _atomic.KinEnergy.ToString("F5"));
             text += string.Format("Потенциальная энергия - {0} эВ\n", _atomic.PotEnergy.ToString("F5"));
             text += string.Format("Полная энергия - {0} эВ\n", _atomic.FullEnergy.ToString("F5"));
-            text += string.Format("Температура - {0} К\n", _atomic.Temperature.ToString("F5"));
+            text += string.Format("Температура - {0} К\n", _atomic.Temperature.ToString("F1"));
             return text;
         }
 
@@ -402,7 +409,7 @@ namespace molecular_dynamics_2_2_3
                 _atomic.KinEnergy.ToString("F5").PadLeft(18),
                 _atomic.PotEnergy.ToString("F5").PadLeft(18),
                 _atomic.FullEnergy.ToString("F5").PadLeft(19),
-                _atomic.Temperature.ToString("F5").PadLeft(16)
+                _atomic.Temperature.ToString("F1").PadLeft(16)
             );
         }
 
