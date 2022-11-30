@@ -59,52 +59,43 @@ namespace molecular_dynamics_2_2_3
             set
             {
                 _type = value;
-                switch (_type)
-                {
-                    case AtomType.Ar:
-                        Param = ParamsMljAr;
-                        break;
-                    default:
-                        Param = ParamsMljAr;
-                        break;
-                }
-            }
+                if (_type == AtomType.Ar)
+                    Param = ParamsMljAr;
+			}
         }
 
         private AtomType _type;
 
-        public PotentialMlj(AtomType type)
-        {
-            Type = type;
-        }
+        public PotentialMlj(AtomType type) => Type = type;
 
-        /// <summary>
-        /// Вычисление силы.
-        /// </summary>
-        /// <param name="r"></param>
-        /// <param name="dxdy"></param>
-        /// <returns></returns>
-        public Vector2D Force(double r, Vector2D dxdy)
-        {
-            return (r < Param.R1) ? FLD(r) * dxdy : (r > Param.R2) ? Vector2D.Zero : FLD(r)  * dxdy * K(r);
-        }
+		/// <summary>
+		/// Вычисление силы.
+		/// </summary>
+		/// <param name="r"></param>
+		/// <param name="dxdy"></param>
+		/// <returns></returns>
+		public Vector2D Force(double r, Vector2D dxdy) => (r < Param.R1) ? FLD(r) * dxdy : (r > Param.R2) ? Vector2D.Zero : FLD(r) * dxdy * K(r);
 
-        /// <summary>
-        /// Вычисление потенциала.
-        /// </summary>
-        /// <param name="r">Расстояние между частицами.</param>
-        /// <returns></returns>
-        public double PotentialEnergy(double r)
-        {
-            return (r < Param.R1) ? PLD(r) : ((r > Param.R2) ? 0 : PLD(r) * K(r));
-        }
+		/// <summary>
+		/// Вычисление потенциала.
+		/// </summary>
+		/// <param name="r">Расстояние между частицами.</param>
+		/// <returns></returns>
+		public double PotentialEnergy(double r) => (r < Param.R1) ? PLD(r) : ((r > Param.R2) ? 0 : PLD(r) * K(r));
 
-        /// <summary>
-        /// Потенциал Леннарда-Джонса.
-        /// </summary>
-        /// <param name="r">Расстояние между частицами.</param>
-        /// <returns></returns>
-        private double PLD(double r)
+		/// <summary>
+		/// Функция обрезания потенциала.
+		/// </summary>
+		/// <param name="r">Расстояние между частицами.</param>
+		/// <returns></returns>
+		private double K(double r) => Math.Pow(1 - (r - Param.R1) * (r - Param.R1) / (Param.R1 - Param.R2) / (Param.R1 - Param.R2), 2);
+
+		/// <summary>
+		/// Потенциал Леннарда-Джонса.
+		/// </summary>
+		/// <param name="r">Расстояние между частицами.</param>
+		/// <returns></returns>
+		private double PLD(double r)
         {
             var ri = Param.Sigma / r;
             var ri3 = ri * ri * ri;
@@ -124,15 +115,5 @@ namespace molecular_dynamics_2_2_3
             var ri6 = ri3 * ri3;
             return 24 * Param.D * eV * ri6 * (2 * ri6 - 1) / (r * r);
         }
-
-        /// <summary>
-        /// Функция обрезания потенциала.
-        /// </summary>
-        /// <param name="r">Расстояние между частицами.</param>
-        /// <returns></returns>
-        private double K(double r)
-        {
-            return Math.Pow(1 - (r - Param.R1) * (r - Param.R1) / (Param.R1 - Param.R2) / (Param.R1 - Param.R2), 2);
-        }
-    }
+	}
 }
